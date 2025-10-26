@@ -60,6 +60,9 @@ TagManager:
   - name: Net
     uniqueID: 1488243643
     locked: 0
+  - name: Cloud
+    uniqueID: 3870458629
+    locked: 0
   - name: Chain
     uniqueID: 593061607
     locked: 0
@@ -86,9 +89,6 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 1296533051
-    locked: 0
-  - name: Cloud
-    uniqueID: 3870458629
     locked: 0
   - name: Gadgets
     uniqueID: 1786309121

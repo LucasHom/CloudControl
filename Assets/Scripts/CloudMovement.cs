@@ -41,7 +41,7 @@ public class CloudMovement : MonoBehaviour
         {
             StartCoroutine(pigeonManager.SpawnColumbidae());
         }
-        else
+        else if (waveManager.currentWave < 10)
         {
             pigeonManager.SpawnPigeons();
         }
@@ -49,20 +49,7 @@ public class CloudMovement : MonoBehaviour
 
     }
 
-    public IEnumerator FloatDown()
-    {
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = new Vector3(transform.position.x, 2.5f, transform.position.z);
-        float elapsedTime = 0f;
 
-        while (elapsedTime < 2f)
-        {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveDuration);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-    }
 
     public void RandomizeColliderOffset(float range = 0.3f)
     {

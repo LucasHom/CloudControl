@@ -36,7 +36,7 @@ public class PigeonManager : MonoBehaviour
 
     public IEnumerator SpawnColumbidae()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             SpawnPigeons();
             yield return new WaitForSeconds(0.7f);

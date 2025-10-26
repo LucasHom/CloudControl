@@ -32,6 +32,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float maxWaves = 10;
     private float cloudHeightChange;
     [SerializeField] private CloudMovement cloudMovement;
+    [SerializeField] private CloudBoss cloudBoss;
 
     //Camera
     private CameraManager cameraManager;
@@ -74,6 +75,9 @@ public class WaveManager : MonoBehaviour
     private bool tutorialEnabled = true; // Set to false to disable tutorial popups
     [SerializeField] private GameObject tutorialPrefab;
 
+    //Testing
+    [SerializeField] private bool testBossWave;
+
 
     private void Awake()
     {
@@ -85,38 +89,6 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
-        //Allocate all popups
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Upgrade", "Increase water capacity", "Water Tank", waterTankImage, 4f);
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Item", "Catches up to 15 purified sludge", "Splash Net", netImage, 2.5f);
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Pipe", "Periodically shoots water", "Water pipe", waterProjImage, 3.2f, pipeImage, new Color(6f / 255f, 154f / 255f, 1f));
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Upgrade", "Increase reload speed", "Reload speed", reloadSpeedImage, 4f);
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Item", "Shields citizen from incoming sludge", "Umbrella", umbrellaImage, 3f);
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Pipe", "Periodically shoots a cold gust, momentarily freezing contacted sludge", "Freeze pipe", freezeGustImage, 2f, pipeImage, new Color(71f / 255f, 227f / 255f, 1f));
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Upgrade", "Increase player speed", "Swift shoe", swiftShoeImage, 4f);
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Item", "Crack open to heal citizen", "Medpack", medpackImage, 2.5f);
-        //});
-        //unlockQueue.Enqueue(() => {
-        //    createPopup("Pipe", "Generates shield bubbles to deflect sludge", "Shield bubble pipe", shieldBubbleImage, 2f, pipeImage, new Color(102f / 255f, 148f / 255f, 172f / 255f));
-        //});
-
-
-        //UNCOMMENT TO ENABLE BUTTON SECURITY
-
         unlockQueue.Enqueue(() =>
         {
             createPopup("Upgrade", "Increase water capacity", "Water Tank", waterTankImage, 4f);
@@ -164,6 +136,23 @@ public class WaveManager : MonoBehaviour
         });
 
 
+        
+
+
+        cloudHeightChange = (maxCloudHeight - cloudMovement.startingCloudHeight) / maxWaves;
+        citizenHealthIndicator.SetActive(false);
+
+        randomSpawnPosition = new Vector3(UnityEngine.Random.Range(minXSpawn, maxXSpawn), cloudMovement.transform.position.y, 0f);
+
+        if (testBossWave)
+        {
+            currentWave = 10;
+            currentWaveIndex = 9;
+            cloudMovement.startingCloudHeight = maxCloudHeight - cloudHeightChange;
+            shopManager.currency = 999;
+            shopLocked = false;
+        }
+
         //Lock all pipes
         if (shopLocked)
         {
@@ -179,12 +168,6 @@ public class WaveManager : MonoBehaviour
             buttonSecurityManager.Lock("FreezePipeButton");
             buttonSecurityManager.Lock("ShieldBubblePipeButton");
         }
-
-
-        cloudHeightChange = (maxCloudHeight - cloudMovement.startingCloudHeight) / maxWaves;
-        citizenHealthIndicator.SetActive(false);
-
-        randomSpawnPosition = new Vector3(UnityEngine.Random.Range(minXSpawn, maxXSpawn), cloudMovement.transform.position.y, 0f);
 
         StartCoroutine(GameLoop());
     }
@@ -362,7 +345,6 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator FlashFlood()
     {
-        Debug.Log("flash flooding");
         StartCoroutine(cloudMovement.ChangeCloudHeight(cloudHeightChange));
 
         yield return new WaitForSeconds(2f);
@@ -376,7 +358,7 @@ public class WaveManager : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenWave);
 
         cameraManager.SwitchToGameView();
-        StartCoroutine(cloudMovement.FloatDown()); //balls should fall from cloud as float down
+        StartCoroutine(cloudBoss.DeathByGlamour()); //Start bossfight
         yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
         DisableTransitionText();
         ToggleCitizenHealth();
@@ -387,7 +369,7 @@ public class WaveManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         //Spawn boss wave
-        //handle everything in cloud script? new cloud script
+        //handle everything in CloudBoss script
 
         yield return null;
     }
