@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CloudBoss : MonoBehaviour
 {
+    //Entrance
+    [SerializeField] private float entranceHeight = 2.5f;
 
+    //Sludge spawning
     [SerializeField] private GameObject largeBallPrefab;
     [SerializeField] private GameObject mediumBallPrefab;
     [SerializeField] private GameObject smallBallPrefab;
@@ -18,6 +21,9 @@ public class CloudBoss : MonoBehaviour
     private GameObject[] normalSludge;
     private GameObject[] guardedSludge;
     private GameObject[] allSludge;
+
+    //Weak spot spawning
+    [SerializeField] private GameObject weakSpotPrefab;
 
 
     // Start is called before the first frame update
@@ -51,18 +57,30 @@ public class CloudBoss : MonoBehaviour
             SpawnSludge("normal", -0.8f);
             yield return new WaitForSeconds(0.12f);
         }
+        yield return new WaitUntil(() => transform.position.y == entranceHeight);
+
     }
 
     private IEnumerator PhaseOne()
     {
+        for (int i = 0; i < 5; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x - 4 + (2*i), transform.position.y + Random.Range(-1.8f, -0.25f), transform.position.z);
+            GameObject sludge = Instantiate(weakSpotPrefab, randomPosition, Quaternion.identity);
+            yield return new WaitForSeconds(0.25f);
+        }
+
         yield return new WaitForSeconds(10f);
 
         //Create weak spots then have this spawning until weak spots gone
-        for (int i = 0; i < 20; i++)
+        while (CloudWeakSpot.weakSpotsActive > 0) //while weak spots exist
         {
             SpawnSludge("normal", 5f);
             yield return new WaitForSeconds(3f);
         }
+
+        Debug.Log("Phase1 over!");
+        Time.timeScale = 0f;
     }
 
     private IEnumerator PhaseTwo()
@@ -105,7 +123,6 @@ public class CloudBoss : MonoBehaviour
 
         if (sludge != null)
         {
-            Debug.Log("Spawned sludge at position: " + randomPosition);
             sludge.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-0.4f, 0.4f), spawnUpForce), ForceMode2D.Impulse);
         }
     }
@@ -113,7 +130,7 @@ public class CloudBoss : MonoBehaviour
     private IEnumerator FloatDown()
     {
         Vector3 startPosition = transform.position;
-        Vector3 targetPosition = new Vector3(transform.position.x, 2.5f, transform.position.z);
+        Vector3 targetPosition = new Vector3(transform.position.x, entranceHeight, transform.position.z);
         float elapsedTime = 0f;
 
         while (elapsedTime < 2f)

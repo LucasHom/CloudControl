@@ -6,33 +6,37 @@ public class WaterCollision : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D col)
     {
-        
-        if (col.tag == "BallGuard")
+        if (col.gameObject.tag == "Ground")
+        {
+            Destroy(transform.parent.gameObject);
+        }
+        else if (col.tag == "Ball")
+        {
+            col.GetComponent<Ball>().Split();
+            Destroy(transform.parent.gameObject);
+        }
+        else if (col.tag == "SupportBall")
+        {
+            col.GetComponent<SupportBall>().Grow();
+            Destroy(transform.parent.gameObject);
+        }
+        else if (col.tag == "WeakSpot")
+        {
+            col.GetComponent<CloudWeakSpot>().HitByWater();
+            Destroy(transform.parent.gameObject);
+        }
+        else if (col.tag == "BallGuard")
         {
             Transform guardedBall = col.gameObject.transform.parent;
             guardedBall.GetComponent<HitGuard>().ActivateHitGuardPS();
             Destroy(transform.parent.gameObject);
         }
-        if (col.tag == "Ball")
-        {
-            col.GetComponent<Ball>().Split();
-            Destroy(transform.parent.gameObject);
-        }
-        if (col.tag == "SupportBall")
-        {
-            col.GetComponent<SupportBall>().Grow();
-            Destroy(transform.parent.gameObject);
-        }
-        if (col.gameObject.tag == "Wall")
+        else if (col.gameObject.tag == "Wall")
         {
             //Special wall particlees?
             Destroy(transform.parent.gameObject);
         }
-        if (col.gameObject.tag == "Ground")
-        {
-            Destroy(transform.parent.gameObject);
-        }
-        if (col.gameObject.tag == "Medpack")
+        else if (col.gameObject.tag == "Medpack")
         {
             col.GetComponent<Medpack>().Bounce();
             Destroy(transform.parent.gameObject);
