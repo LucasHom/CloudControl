@@ -48,6 +48,7 @@ public class CloudWeakSpawner : MonoBehaviour
 
     private IEnumerator ShootSludge()
     {
+        yield return new WaitForSeconds(3f);
         for (int i = 0; i < 3; i++)
         {
 
@@ -75,7 +76,7 @@ public class CloudWeakSpawner : MonoBehaviour
             cloudBoss.SpawnSludge("normal", -4f, transform.position);
             yield return new WaitForSeconds(0.4f);
         }
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(4f);
 
         StartCoroutine(ShootSludge());
     }

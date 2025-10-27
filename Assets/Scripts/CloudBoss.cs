@@ -96,12 +96,11 @@ public class CloudBoss : MonoBehaviour
 
     private IEnumerator PhaseTwo()
     {
-        yield return new WaitForSeconds(3f);
         yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z)));
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < 2; i++)
         {
-            Vector3 randomPosition = new Vector3(transform.position.x - 4 + (8 * i), transform.position.y - 2.5f, transform.position.z);
+            Vector3 randomPosition = new Vector3(transform.position.x - 4 + (8 * i), transform.position.y - 2f, transform.position.z);
             GameObject sludge = Instantiate(weakSpawnPrefab, randomPosition, Quaternion.identity);
             sludge.GetComponent<CloudWeakSpawner>().cloudBoss = this;
             yield return new WaitForSeconds(0.25f);
@@ -125,12 +124,13 @@ public class CloudBoss : MonoBehaviour
     private IEnumerator TakeDamage()
     {
         StartCoroutine(pigeonManager.SpawnColumbidae());
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 60; i++)
         {
             Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-6.5f, 6.5f), transform.position.y + Random.Range(-1.5f, 1), transform.position.z);
             Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.08f);
         }
+        yield return new WaitForSeconds(3f);
     }
 
     // Testing some new butt
