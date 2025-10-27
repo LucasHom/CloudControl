@@ -19,6 +19,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI newNotifText;
     public bool newUnlock = false;
     [SerializeField] private GameObject emptyNotif; //Empty notification when no new unlocks are available
+    [SerializeField] private TextMeshProUGUI rewardAmountText;
 
 
     //Open-Close shop
@@ -28,6 +29,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] float shopTransitionDelay = 0.5f;
     [SerializeField] public GameObject shopContent;
     private Coroutine updateCurrencyCoroutine;
+
+    [SerializeField] private CitizenManager citizenManager;
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +88,9 @@ public class ShopManager : MonoBehaviour
             GadgetPurchase.waitingForLocation = false;
             resetCurrencyIncrease();
         }
+
+        //update reward amount text
+        rewardAmountText.text = $"REWARD: ${citizenManager.calcThanks()}";
 
         Time.timeScale = isBackgroundActive ? 0f : 1f;
     }

@@ -51,7 +51,7 @@ public class WaveManager : MonoBehaviour
     //Citizens
     [SerializeField] CitizenManager girlfriend;
     [SerializeField] GameObject citizenHealthIndicator;
-
+    [SerializeField] int maxThanksIncrease = 3;
 
     //Popups
     Queue<Action> unlockQueue = new Queue<Action>();
@@ -250,7 +250,7 @@ public class WaveManager : MonoBehaviour
                 shopManager.newUnlock = true;
             }
 
-            girlfriend.maxThanks = (int)(girlfriend.maxThanks + 2); //increase midges possible rewards
+            girlfriend.maxThanks = (int)(girlfriend.maxThanks + maxThanksIncrease); //increase midges possible rewards
 
             cameraManager.SwitchToCloudView();
             yield return new WaitUntil(() => !cinemachineBrain.IsBlending);

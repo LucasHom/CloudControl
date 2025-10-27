@@ -166,7 +166,7 @@ public class CitizenManager : MonoBehaviour
     }
 
 
-    private int calcThanks()
+    public int calcThanks()
     {
         return (int)(healthToThanks[citizenHealth] * maxThanks);
     }
