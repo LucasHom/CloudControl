@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CloudWeakSpot : MonoBehaviour
+public class CloudWeakSpawner : MonoBehaviour
 {
-    public static int weakSpotsActive = 0;
+    public static int weakSpawnersActive = 0;
     private int health = 10;
 
     //Destroy
@@ -17,17 +17,21 @@ public class CloudWeakSpot : MonoBehaviour
     private Coroutine flashCoroutine;
     private Coroutine popCoroutine = null;
 
+    public CloudBoss cloudBoss;
+
     // Start is called before the first frame update
     void Start()
     {
-        weakSpotsActive++;
+        weakSpawnersActive++;
+        StartCoroutine(ShootSludge());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
     public void HitByWater()
     {
         health--;
@@ -38,8 +42,42 @@ public class CloudWeakSpot : MonoBehaviour
         if (health <= 0 && popCoroutine == null)
         {
             popCoroutine = StartCoroutine(PopEffect());
-            
+
         }
+    }
+
+    private IEnumerator ShootSludge()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+
+
+
+
+
+
+
+
+            //move to new location really fast glide there and ease into it
+
+
+
+
+
+
+
+
+
+
+
+
+
+            cloudBoss.SpawnSludge("normal", -4f, transform.position);
+            yield return new WaitForSeconds(0.4f);
+        }
+        yield return new WaitForSeconds(8f);
+
+        StartCoroutine(ShootSludge());
     }
 
     private IEnumerator FlashWhite()
@@ -79,7 +117,7 @@ public class CloudWeakSpot : MonoBehaviour
         }
         transform.localScale = Vector3.zero;
 
-        weakSpotsActive--;
+        weakSpawnersActive--;
         Destroy(gameObject);
     }
 }

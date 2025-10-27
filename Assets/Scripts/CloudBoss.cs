@@ -24,7 +24,11 @@ public class CloudBoss : MonoBehaviour
 
     //Weak spot spawning
     [SerializeField] private GameObject weakSpotPrefab;
+    [SerializeField] private GameObject weakSpawnPrefab;
 
+
+    //Misc
+    [SerializeField] PigeonManager pigeonManager;
 
     // Start is called before the first frame update
     void Start()
@@ -45,16 +49,23 @@ public class CloudBoss : MonoBehaviour
     {
         yield return StartCoroutine(DRAMATICEntrance());
         yield return StartCoroutine(PhaseOne());
+
+        yield return StartCoroutine(TakeDamage()); //break
+
         yield return StartCoroutine(PhaseTwo());
+
+        yield return StartCoroutine(TakeDamage()); //break
+
         yield return StartCoroutine(PhaseThree());
     }
 
     private IEnumerator DRAMATICEntrance()
     {
-        StartCoroutine(FloatDown());
+        StartCoroutine(Move(transform.position, new Vector3(transform.position.x, entranceHeight, transform.position.z)));
         for (int i = 0; i < 8; i++)
         {
-            SpawnSludge("normal", -0.8f);
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("normal", -0.8f, randomPosition);
             yield return new WaitForSeconds(0.12f);
         }
         yield return new WaitUntil(() => transform.position.y == entranceHeight);
@@ -75,17 +86,35 @@ public class CloudBoss : MonoBehaviour
         //Create weak spots then have this spawning until weak spots gone
         while (CloudWeakSpot.weakSpotsActive > 0) //while weak spots exist
         {
-            SpawnSludge("normal", 5f);
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("normal", 5f, randomPosition);
             yield return new WaitForSeconds(3f);
         }
 
         Debug.Log("Phase1 over!");
-        Time.timeScale = 0f;
     }
 
     private IEnumerator PhaseTwo()
     {
-        yield return null;
+        yield return new WaitForSeconds(3f);
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z)));
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < 2; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x - 4 + (8 * i), transform.position.y - 2.5f, transform.position.z);
+            GameObject sludge = Instantiate(weakSpawnPrefab, randomPosition, Quaternion.identity);
+            sludge.GetComponent<CloudWeakSpawner>().cloudBoss = this;
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        while (CloudWeakSpawner.weakSpawnersActive > 0) //while weak spawners exist
+        {
+            //Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            //SpawnSludge("normal", 5f, randomPosition);
+            yield return new WaitForSeconds(3f);
+        }
+
+
     }
 
     private IEnumerator PhaseThree()
@@ -93,28 +122,39 @@ public class CloudBoss : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator TakeDamage()
+    {
+        StartCoroutine(pigeonManager.SpawnColumbidae());
+        for (int i = 0; i < 40; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-6.5f, 6.5f), transform.position.y + Random.Range(-1.5f, 1), transform.position.z);
+            Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     // Testing some new butt
     /// <summary>
     /// Spawns a random sludge ball from the given list at a specified position.
     /// </summary>
-    /// <param name="type">The array of ball prefabs to choose from.</param>
-    private void SpawnSludge(string type = "all", float spawnUpForce = 0f)
+    /// <param name="type">The array of ball prefabs to choose from: normal, guarded, all</param>
+    public void SpawnSludge(string type = "all", float spawnUpForce = 0f, Vector3 spawnPosition = default)
     {
         GameObject sludge = null;
-        Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
-        Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
+
+        Instantiate(sewageExplosion, spawnPosition, Quaternion.identity);
 
         if (type == "normal")
         {
-            sludge = Instantiate(normalSludge[Random.Range(0, normalSludge.Length)], randomPosition, Quaternion.identity);
+            sludge = Instantiate(normalSludge[Random.Range(0, normalSludge.Length)], spawnPosition, Quaternion.identity);
         }
         else if (type == "guarded")
         {
-            sludge = Instantiate(guardedSludge[Random.Range(0, guardedSludge.Length)], randomPosition, Quaternion.identity);
+            sludge = Instantiate(guardedSludge[Random.Range(0, guardedSludge.Length)], spawnPosition, Quaternion.identity);
         }
         else if (type == "all")
         {
-            sludge = Instantiate(allSludge[Random.Range(0, allSludge.Length)], randomPosition, Quaternion.identity);
+            sludge = Instantiate(allSludge[Random.Range(0, allSludge.Length)], spawnPosition, Quaternion.identity);
         }
         else
         {
@@ -127,15 +167,13 @@ public class CloudBoss : MonoBehaviour
         }
     }
 
-    private IEnumerator FloatDown()
+    private IEnumerator Move(Vector3 startPosition, Vector3 endPosition)
     {
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = new Vector3(transform.position.x, entranceHeight, transform.position.z);
         float elapsedTime = 0f;
 
         while (elapsedTime < 2f)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / 1f);
+            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / 1f);
             elapsedTime += Time.deltaTime;
 
             yield return null;

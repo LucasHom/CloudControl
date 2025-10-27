@@ -18,6 +18,7 @@ TagManager:
   - Water
   - LocationButton
   - WeakSpot
+  - WeakSpawner
   layers:
   - Default
   - TransparentFX

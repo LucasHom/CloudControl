@@ -25,6 +25,11 @@ public class WaterCollision : MonoBehaviour
             col.GetComponent<CloudWeakSpot>().HitByWater();
             Destroy(transform.parent.gameObject);
         }
+        else if (col.tag == "WeakSpawner")
+        {
+            col.GetComponent<CloudWeakSpawner>().HitByWater();
+            Destroy(transform.parent.gameObject);
+        }
         else if (col.tag == "BallGuard")
         {
             Transform guardedBall = col.gameObject.transform.parent;
