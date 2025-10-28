@@ -234,6 +234,37 @@ public class CitizenManager : MonoBehaviour
         thanksReaction.SetActive(false);
     }
 
+    public IEnumerator ShowEcstatic()
+    {
+        Sprite face = thanksReaction.GetComponent<Image>().sprite;
+        face = ecstaticReaction;
+        
+        thanksEarned.gameObject.SetActive(false);
+
+        thanksReaction.SetActive(true);
+        Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY, 0f);
+        Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY + 0.6f, 0f);
+
+        Color startColor = Color.white;
+        Color targetColor = new Color(1f, 1f, 1f, 0f);
+
+        float startTime = Time.time;
+        float glideDuration = 1.5f;
+
+        while ((Time.time - startTime) < glideDuration)
+        {
+            float glideProgress = (Time.time - startTime) / glideDuration;
+
+            thanksReaction.GetComponent<RectTransform>().position = Vector3.Lerp(startPosition, targetPosition, glideProgress);
+            thanksReaction.GetComponent<Image>().color = Color.Lerp(startColor, targetColor, glideProgress);
+            thanksEarned.color = Color.Lerp(startColor, targetColor, glideProgress);
+
+            yield return null;
+        }
+
+        thanksReaction.SetActive(false);
+    }
+
 
     private IEnumerator MoveBackAndForth()
     {

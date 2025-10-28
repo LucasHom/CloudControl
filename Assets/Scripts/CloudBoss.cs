@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +28,10 @@ public class CloudBoss : MonoBehaviour
 
 
     //Misc
-    [SerializeField] PigeonManager pigeonManager;
+    [SerializeField] private PigeonManager pigeonManager;
+    [SerializeField] private CitizenManager citizenManager;
+
+    [SerializeField] private GameObject waterPellet;
 
     // Start is called before the first frame update
     void Start()
@@ -47,18 +50,35 @@ public class CloudBoss : MonoBehaviour
 
     public IEnumerator DeathByGlamour()
     {
+        
         yield return StartCoroutine(DRAMATICEntrance());
+
         yield return StartCoroutine(PhaseOne());
+        for (int i = 0; i < 3; i++)
+        {
+            citizenManager.GiveThanks();
+            yield return new WaitForSeconds(0.8f);
+        }
 
         yield return StartCoroutine(TakeDamage()); //break
 
         yield return StartCoroutine(PhaseTwo());
+        for (int i = 0; i < 3; i++)
+        {
+            citizenManager.GiveThanks();
+            yield return new WaitForSeconds(0.8f);
+        }
 
         yield return StartCoroutine(TakeDamage()); //break
 
         yield return StartCoroutine(PhaseThree());
 
-        Debug.Log("YOU WIN!");
+        //turn off shop toggle
+
+        yield return StartCoroutine(CloudDie());
+
+        //Endgame screen
+
     }
 
     private IEnumerator DRAMATICEntrance()
@@ -139,53 +159,70 @@ public class CloudBoss : MonoBehaviour
             SpawnSludge("normal", 5f, randomPosition);
             yield return new WaitForSeconds(0.12f);
         }
-        yield return new WaitForSeconds(1f);
+        
         yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 2.5f, transform.position.z), .4f));
 
         yield return StartCoroutine(SpawnWeakSpots(2));
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
 
         yield return StartCoroutine(SpawnWeakSpawners(1));
 
         while (CloudWeakSpawner.weakSpawnersActive > 0 || CloudWeakSpot.weakSpotsActive > 0) //while weak spawners exist
         {
-            yield return new WaitForSeconds(1f);
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("normal", 5f, randomPosition);
+            yield return new WaitForSeconds(4f);
         }
 
         //subphase2
-        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 1.5f));
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("guarded", 7f, randomPosition);
+            yield return new WaitForSeconds(0.12f);
+        }
+
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 0.4f));
+
+
+        yield return new WaitForSeconds(3f);
+
+        for (int i = 0; i < 2; i++)
         {
             Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
             SpawnSludge("guarded", 5f, randomPosition);
             yield return new WaitForSeconds(0.12f);
         }
-        yield return new WaitForSeconds(1f);
+
         yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 2.5f, transform.position.z), .4f));
 
         yield return StartCoroutine(SpawnWeakSpots(3));
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(7f);
 
         yield return StartCoroutine(SpawnWeakSpawners(2));
 
         while (CloudWeakSpawner.weakSpawnersActive > 0 || CloudWeakSpot.weakSpotsActive > 0) //while weak spawners exist
         {
-            yield return new WaitForSeconds(1f);
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("normal", 5f, randomPosition);
+            yield return new WaitForSeconds(4f);
         }
 
         //subphase3
-        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 1.5f));
-
         for (int i = 0; i < 8; i++)
         {
             Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
-            SpawnSludge("all", 5f, randomPosition);
+            SpawnSludge("all", 7f, randomPosition);
             yield return new WaitForSeconds(0.12f);
         }
-        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 0.4f));
+
+        yield return new WaitForSeconds(5f);
+
         yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 2.5f, transform.position.z), .4f));
 
         yield return StartCoroutine(SpawnWeakSpots(10));
@@ -208,6 +245,23 @@ public class CloudBoss : MonoBehaviour
             yield return new WaitForSeconds(0.08f);
         }
         yield return new WaitForSeconds(2f);
+    }
+
+
+    private IEnumerator CloudDie()
+    {
+        StartCoroutine(FadeOut(GetComponent<SpriteRenderer>(), 5f)); // fade now lasts 8 seconds
+        StartCoroutine(Rain());
+        for (int i = 0; i < 140; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-6.5f, 6.5f), transform.position.y + Random.Range(-1.5f, 1), transform.position.z);
+            Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
+            yield return new WaitForSeconds(0.04f);
+        }
+
+        yield return new WaitForSeconds(4f);
+        yield return StartCoroutine(citizenManager.ShowEcstatic());
+
     }
 
     // Testing some new butt
@@ -257,6 +311,41 @@ public class CloudBoss : MonoBehaviour
         }
     }
 
+    private IEnumerator Rain()
+    {
+        for (int i = 0; i < 300; i++)
+        {
+            Vector3 randomPosition = new Vector3(Random.Range(-7.5f, 7.5f), 6f, transform.position.z);
+            Instantiate(waterPellet, randomPosition, Quaternion.identity);
+            yield return new WaitForSeconds(0.015f);
+        }
+    }
+
+    private IEnumerator FadeOut(SpriteRenderer sprite, float duration = 5f)
+    {
+        yield return new WaitForSeconds(1f); // optional delay
+        Color originalColor = sprite.color;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            // ease-out: slow at start, fast at end
+            float easedT = Mathf.Pow(t, 6f); // change 2f to higher for stronger acceleration
+
+            float alpha = Mathf.Lerp(1f, 0f, easedT);
+            sprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+            yield return null;
+        }
+
+        // ensure fully transparent at the end
+        sprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+    }
+
+
     private IEnumerator SpawnWeakSpawners(int amount)
     {
         float minX = -6f;
@@ -294,7 +383,7 @@ public class CloudBoss : MonoBehaviour
 
             Vector3 randomPosition = new Vector3(
                 x,
-                transform.position.y + Random.Range(-1.8f, -0.25f),
+                transform.position.y - 1.2f,
                 transform.position.z
             );
 

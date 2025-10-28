@@ -18,6 +18,7 @@ public class CloudWeakSpawner : MonoBehaviour
     private Coroutine popCoroutine = null;
 
     public CloudBoss cloudBoss;
+    [SerializeField] private GameObject sewageExplosion;
 
     // Start is called before the first frame update
     void Start()
@@ -79,11 +80,11 @@ public class CloudWeakSpawner : MonoBehaviour
             // optional short pause after arriving
             yield return new WaitForSeconds(0.1f);
 
-
+            Instantiate(sewageExplosion, transform.position, Quaternion.identity);
             cloudBoss.SpawnSludge("normal", -4f, transform.position);
             yield return new WaitForSeconds(0.4f);
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
 
         StartCoroutine(ShootSludge());
     }
