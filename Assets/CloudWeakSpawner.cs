@@ -48,35 +48,42 @@ public class CloudWeakSpawner : MonoBehaviour
 
     private IEnumerator ShootSludge()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < 3; i++)
         {
-
-
-
-
-
-
-
-
             //move to new location really fast glide there and ease into it
+            float prevX = transform.position.x;
+            float targetX;
+            Vector3 startPos = transform.position;
+            do
+            {
+                targetX = Random.Range(-6f, 6f);
+            }
+            while (Mathf.Abs(targetX - prevX) < 1.5f);
+            Vector3 targetPos = new Vector3(targetX, transform.position.y, transform.position.z);
 
+            float glideTime = 0.4f;  // how long the glide lasts
+            float elapsed = 0f;
 
+            // smooth glide (ease in/out)
+            while (elapsed < glideTime)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / glideTime;
+                // use SmoothStep for a nice easing curve
+                t = Mathf.SmoothStep(0, 1, t);
+                transform.position = Vector3.Lerp(startPos, targetPos, t);
+                yield return null;  // wait a frame
+            }
 
-
-
-
-
-
-
-
-
+            // optional short pause after arriving
+            yield return new WaitForSeconds(0.1f);
 
 
             cloudBoss.SpawnSludge("normal", -4f, transform.position);
             yield return new WaitForSeconds(0.4f);
         }
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
         StartCoroutine(ShootSludge());
     }

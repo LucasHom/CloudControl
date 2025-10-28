@@ -57,11 +57,13 @@ public class CloudBoss : MonoBehaviour
         yield return StartCoroutine(TakeDamage()); //break
 
         yield return StartCoroutine(PhaseThree());
+
+        Debug.Log("YOU WIN!");
     }
 
     private IEnumerator DRAMATICEntrance()
     {
-        StartCoroutine(Move(transform.position, new Vector3(transform.position.x, entranceHeight, transform.position.z)));
+        StartCoroutine(Move(transform.position, new Vector3(transform.position.x, entranceHeight, transform.position.z), 2f));
         for (int i = 0; i < 8; i++)
         {
             Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
@@ -74,13 +76,7 @@ public class CloudBoss : MonoBehaviour
 
     private IEnumerator PhaseOne()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            Vector3 randomPosition = new Vector3(transform.position.x - 4 + (2*i), transform.position.y + Random.Range(-1.8f, -0.25f), transform.position.z);
-            GameObject sludge = Instantiate(weakSpotPrefab, randomPosition, Quaternion.identity);
-            yield return new WaitForSeconds(0.25f);
-        }
-
+        yield return StartCoroutine(SpawnWeakSpots(5));
         yield return new WaitForSeconds(10f);
 
         //Create weak spots then have this spawning until weak spots gone
@@ -96,29 +92,110 @@ public class CloudBoss : MonoBehaviour
 
     private IEnumerator PhaseTwo()
     {
-        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z)));
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 2; i++)
-        {
-            Vector3 randomPosition = new Vector3(transform.position.x - 4 + (8 * i), transform.position.y - 2f, transform.position.z);
-            GameObject sludge = Instantiate(weakSpawnPrefab, randomPosition, Quaternion.identity);
-            sludge.GetComponent<CloudWeakSpawner>().cloudBoss = this;
-            yield return new WaitForSeconds(0.25f);
-        }
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 1.5f));
+
+
+        //Could do this:   but while is better for polling runtime for 1 sec instead of 1 frame
+        //yield return new WaitWhile(() => CloudWeakSpawner.weakSpawnersActive > 0);
+        yield return StartCoroutine(SpawnWeakSpawners(1));
 
         while (CloudWeakSpawner.weakSpawnersActive > 0) //while weak spawners exist
         {
-            //Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
-            //SpawnSludge("normal", 5f, randomPosition);
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
         }
 
+        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(SpawnWeakSpawners(2));
+
+        while (CloudWeakSpawner.weakSpawnersActive > 0) //while weak spawners exist
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(SpawnWeakSpawners(2));
+
+        while (CloudWeakSpawner.weakSpawnersActive > 0) //while weak spawners exist
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(SpawnWeakSpawners(3));
+
+        while (CloudWeakSpawner.weakSpawnersActive > 0) //while weak spawners exist
+        {
+            yield return new WaitForSeconds(1f);
+        }
 
     }
 
     private IEnumerator PhaseThree()
     {
-        yield return null;
+        //subphase 1
+        for (int i = 0; i < 6; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("normal", 5f, randomPosition);
+            yield return new WaitForSeconds(0.12f);
+        }
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 2.5f, transform.position.z), .4f));
+
+        yield return StartCoroutine(SpawnWeakSpots(2));
+
+        yield return new WaitForSeconds(2f);
+
+        yield return StartCoroutine(SpawnWeakSpawners(1));
+
+        while (CloudWeakSpawner.weakSpawnersActive > 0 || CloudWeakSpot.weakSpotsActive > 0) //while weak spawners exist
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        //subphase2
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 1.5f));
+
+        for (int i = 0; i < 5; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("guarded", 5f, randomPosition);
+            yield return new WaitForSeconds(0.12f);
+        }
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 2.5f, transform.position.z), .4f));
+
+        yield return StartCoroutine(SpawnWeakSpots(3));
+
+        yield return new WaitForSeconds(2f);
+
+        yield return StartCoroutine(SpawnWeakSpawners(2));
+
+        while (CloudWeakSpawner.weakSpawnersActive > 0 || CloudWeakSpot.weakSpotsActive > 0) //while weak spawners exist
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        //subphase3
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 4.5f, transform.position.z), 1.5f));
+
+        for (int i = 0; i < 8; i++)
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("all", 5f, randomPosition);
+            yield return new WaitForSeconds(0.12f);
+        }
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(Move(transform.position, new Vector3(transform.position.x, 2.5f, transform.position.z), .4f));
+
+        yield return StartCoroutine(SpawnWeakSpots(10));
+
+        while (CloudWeakSpot.weakSpotsActive > 0) //while weak spots exist
+        {
+            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
+            SpawnSludge("normal", 5f, randomPosition);
+            yield return new WaitForSeconds(2f);
+        }
     }
 
     private IEnumerator TakeDamage()
@@ -130,7 +207,7 @@ public class CloudBoss : MonoBehaviour
             Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
             yield return new WaitForSeconds(0.08f);
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
     }
 
     // Testing some new butt
@@ -167,16 +244,62 @@ public class CloudBoss : MonoBehaviour
         }
     }
 
-    private IEnumerator Move(Vector3 startPosition, Vector3 endPosition)
+    private IEnumerator Move(Vector3 startPosition, Vector3 endPosition, float duration)
     {
         float elapsedTime = 0f;
 
-        while (elapsedTime < 2f)
+        while (elapsedTime < duration)
         {
             transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / 1f);
             elapsedTime += Time.deltaTime;
 
             yield return null;
+        }
+    }
+
+    private IEnumerator SpawnWeakSpawners(int amount)
+    {
+        float minX = -6f;
+        float maxX = 6f;
+
+        for (int i = 0; i < amount; i++)
+        {
+            // Compute evenly spaced x using interpolation
+            float interpVal = (amount == 1) ? 0.5f : (float)i / (amount - 1);
+            float x = Mathf.Lerp(minX, maxX, interpVal);
+
+            Vector3 randomPosition = new Vector3(
+                x,
+                transform.position.y - 2f,
+                transform.position.z
+            );
+
+            GameObject sludge = Instantiate(weakSpawnPrefab, randomPosition, Quaternion.identity);
+            sludge.GetComponent<CloudWeakSpawner>().cloudBoss = this;
+
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    private IEnumerator SpawnWeakSpots(int amount)
+    {
+        float minX = -5f;
+        float maxX = 5f;
+
+        for (int i = 0; i < amount; i++)
+        {
+            // Compute evenly spaced x using interpolation
+            float interpVal = (amount == 1) ? 0.5f : (float)i / (amount - 1);
+            float x = Mathf.Lerp(minX, maxX, interpVal);
+
+            Vector3 randomPosition = new Vector3(
+                x,
+                transform.position.y + Random.Range(-1.8f, -0.25f),
+                transform.position.z
+            );
+
+            GameObject sludge = Instantiate(weakSpotPrefab, randomPosition, Quaternion.identity);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }
