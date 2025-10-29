@@ -109,7 +109,16 @@ public class Ball : MonoBehaviour
                 //Debug.Log("Started citizen freeze routine");
                 CitizenManager cman = col.gameObject.GetComponent<CitizenManager>();
                 cman.setCitizenHealth(cman.getCitizenHealth() - 1);
-                cman.startFreezeCitizenCoroutine();
+                if (cman.getCitizenHealth() <= 0)
+                {
+                    cman.EndGame();
+                }
+                else
+                {
+                    cman.startFreezeCitizenCoroutine();
+                }
+
+
                 if (rb2d.velocity.y < 0f && Mathf.Abs(rb2d.velocity.y) > 5.5f)
                 {
                     rb2d.AddForce(new Vector2(0f, 15f), ForceMode2D.Impulse);

@@ -30,6 +30,7 @@ public class CloudBoss : MonoBehaviour
     //Misc
     [SerializeField] private PigeonManager pigeonManager;
     [SerializeField] private CitizenManager citizenManager;
+    [SerializeField] private GameObject endScreen;
 
     [SerializeField] private GameObject waterPellet;
 
@@ -78,7 +79,8 @@ public class CloudBoss : MonoBehaviour
         yield return StartCoroutine(CloudDie());
 
         //Endgame screen
-
+        endScreen.GetComponent<EndScreen>().didWin = true;
+        endScreen.SetActive(true);
     }
 
     private IEnumerator DRAMATICEntrance()

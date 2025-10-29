@@ -8,6 +8,13 @@ using UnityEngine.UI;
 
 public class CitizenManager : MonoBehaviour
 {
+    //Tracking
+    public static int rewardsCollected = 0;
+    public static int possibleRewards = 0;
+    public static int timesMidgeHit = 0;
+    [SerializeField] private GameObject endScreen;
+
+
     [SerializeField] private Rigidbody2D rb2d;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -159,6 +166,8 @@ public class CitizenManager : MonoBehaviour
     public void GiveThanks()
     {
         int thanksAmount = calcThanks();
+        rewardsCollected += thanksAmount;
+        possibleRewards += maxThanks;
         updateReaction(thanksAmount);
         shopManager.StartIncreaseCurrency(thanksAmount);
         coinPS.Play();
@@ -333,6 +342,8 @@ public class CitizenManager : MonoBehaviour
     }
     public IEnumerator freezeCitizen()
     {
+        timesMidgeHit++;
+
         if (citizenIsFrozen) yield break;
 
         citizenIsFrozen = true;
@@ -343,6 +354,12 @@ public class CitizenManager : MonoBehaviour
         //playerHealthy = true;
         citizenIsFrozen = false;
 
+    }
+
+    public void EndGame()
+    {
+        endScreen.GetComponent<EndScreen>().didWin = false;
+        endScreen.SetActive(true);
     }
 
     public void AttemptHeal()

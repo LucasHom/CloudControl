@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //Tracking
+    public static int timesHit = 0;
+
+
     [SerializeField] private Rigidbody2D rb2d;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D bc2d;
@@ -138,16 +142,15 @@ public class Player : MonoBehaviour
     }
     public IEnumerator freezePlayer()
     {
+        timesHit++;
         if (playerIsFrozen) yield break;
 
         //Stop movement and shooting
         playerIsFrozen = true;
         invincibilityDuration = freezeTime + 1.2f;
         playerHealthy = false;
-        //Debug.Log("waiting");
-        //Debug.Log(freezeTime);
         yield return new WaitForSeconds(freezeTime);
-        //Debug.Log("done waiting");
+
         //Start movement and shooting
         playerHealthy = true;
         playerIsFrozen = false;

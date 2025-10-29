@@ -13,6 +13,7 @@ public class Umbrella : MonoBehaviour
     private PurchaseUmbrella purchaseUmbrella;
     [SerializeField] private TextMeshProUGUI healthIndicator;
 
+    public static int mostActiveUmbrellasEver = 0;
     public static Stack<Umbrella> activeUmbrellas = new Stack<Umbrella>();
 
     //Debug
@@ -37,8 +38,6 @@ public class Umbrella : MonoBehaviour
         health = maxHealth;
         citizen = FindObjectOfType<CitizenManager>();
         purchaseUmbrella = FindObjectOfType<PurchaseUmbrella>();
-
-
 
         if (activeUmbrellas.Count == 0)
         {
@@ -69,6 +68,10 @@ public class Umbrella : MonoBehaviour
         activeUmbrellas.Push(this);
         purchaseUmbrella.determineIsReady();
 
+        if (activeUmbrellas.Count > mostActiveUmbrellasEver)
+        {
+            mostActiveUmbrellasEver = activeUmbrellas.Count;
+        }
 
     }
 

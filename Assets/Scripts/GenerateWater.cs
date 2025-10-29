@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class GenerateWater : MonoBehaviour
 {
+    //Tracking
+    public static int waterShotCount = 0;
+
+    //Obj
     [SerializeField] GameObject waterProjectilePrefab; 
     [SerializeField] Transform shootPoint;
     [SerializeField] Rigidbody2D rbPlayer;
@@ -217,6 +221,7 @@ public class GenerateWater : MonoBehaviour
     //Old shoot water logic
     void ShootWater()
     {
+        waterShotCount++;
         GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
         //GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position, Quaternion.identity);
 
