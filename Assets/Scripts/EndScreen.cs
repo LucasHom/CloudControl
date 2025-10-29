@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndScreen : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI midgewasText;
     [SerializeField] private TextMeshProUGUI resultText;
     [SerializeField] private TextMeshProUGUI statHeaderText;
     [SerializeField] private TextMeshProUGUI statResultText;
 
+    [SerializeField] private GameObject midgeReaction;
+    [SerializeField] private Sprite sad;
+    [SerializeField] private Sprite happy;
+
+    [SerializeField] private TMP_FontAsset newFont;
     [SerializeField] private GameObject replayButton;
 
     public bool didWin = false;
@@ -30,14 +37,21 @@ public class EndScreen : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+
 
         if (didWin)
         {
+            resultText.color = new Color(244f / 255f, 195f / 255f, 38f / 255f);
+            midgewasText.color = new Color(244f / 255f, 195f / 255f, 38f / 255f);
             resultText.text = "protected";
+            midgeReaction.GetComponent<Image>().sprite = happy;
+            StartCoroutine(EmphasizeObject.Emphasize(midgeReaction, Vector3.one, 1.1f));
         }
         else
         {
             resultText.text = "slimed out";
+            midgeReaction.GetComponent<Image>().sprite = sad;
         }
 
         replayButton.SetActive(false);
@@ -45,12 +59,16 @@ public class EndScreen : MonoBehaviour
         statResultText.text = "";
 
         StartCoroutine(DisplayStats());
+
+        
     }
 
     private IEnumerator DisplayStats()
     {
+        
         //Accuracy or water shot
         yield return new WaitForSecondsRealtime(0.4f);
+        
         //statHeaderText.text += "Accuracy:\n";
         //statResultText.text += $"{Mathf.Ceil(WaterCollision.waterHitCount / GenerateWater.waterShotCount)}%\n";
         statHeaderText.text += "Water shot:\n";
@@ -84,5 +102,6 @@ public class EndScreen : MonoBehaviour
         //Replay Button
         yield return new WaitForSecondsRealtime(0.4f);
         replayButton.SetActive(true);
+
     }
 }

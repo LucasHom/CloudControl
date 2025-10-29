@@ -19,28 +19,27 @@ public class CursorManager : MonoBehaviour
 
     void Update()
     {
-        if (shopManager.shopContent.activeSelf == false)
+        //if (shopManager.shopContent.activeSelf == false)
+        if (Time.timeScale != 0)
         {
             if (switchedToCrosshair == false)
             {
                 SetCrosshair(crosshairInactive);
-                
+
             }
             if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             {
                 SetCrosshair(crosshairActive);
             }
 
-            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)) 
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
             {
                 SetCrosshair(crosshairInactive);
             }
         }
         else
         {
-            switchedToCrosshair = false;
-            Vector2 hotspot = Vector2.zero;
-            Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
+            ResetCursor();
         }
 
     }
@@ -50,5 +49,12 @@ public class CursorManager : MonoBehaviour
         switchedToCrosshair = true;
         Vector2 hotspot = new Vector2(cursor.width / 2, cursor.height / 2);
         Cursor.SetCursor(cursor, hotspot, CursorMode.Auto);
+    }
+
+    public void ResetCursor()
+    {
+        switchedToCrosshair = false;
+        Vector2 hotspot = Vector2.zero;
+        Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto);
     }
 }
