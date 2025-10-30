@@ -57,25 +57,25 @@ public class CloudBoss : MonoBehaviour
         
         yield return StartCoroutine(DRAMATICEntrance());
 
-        //yield return StartCoroutine(PhaseOne());
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    citizenManager.GiveThanks();
-        //    yield return new WaitForSeconds(0.8f);
-        //}
+        yield return StartCoroutine(PhaseOne());
+        for (int i = 0; i < 3; i++)
+        {
+            citizenManager.GiveThanks();
+            yield return new WaitForSeconds(0.8f);
+        }
 
-        //yield return StartCoroutine(TakeDamage()); //break
+        yield return StartCoroutine(TakeDamage()); //break
 
-        //yield return StartCoroutine(PhaseTwo());
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    citizenManager.GiveThanks();
-        //    yield return new WaitForSeconds(0.8f);
-        //}
+        yield return StartCoroutine(PhaseTwo());
+        for (int i = 0; i < 3; i++)
+        {
+            citizenManager.GiveThanks();
+            yield return new WaitForSeconds(0.8f);
+        }
 
-        //yield return StartCoroutine(TakeDamage()); //break
+        yield return StartCoroutine(TakeDamage()); //break
 
-        //yield return StartCoroutine(PhaseThree());
+        yield return StartCoroutine(PhaseThree());
 
         //turn off shop toggle
         shopManager.isShopToggleReady = false;
@@ -385,10 +385,11 @@ public class CloudBoss : MonoBehaviour
 
             Vector3 randomPosition = new Vector3(
                 x,
-                transform.position.y - 2f,
+                transform.position.y - 2.3f,
                 transform.position.z
             );
 
+            Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
             GameObject sludge = Instantiate(weakSpawnPrefab, randomPosition, Quaternion.identity);
             sludge.GetComponent<CloudWeakSpawner>().cloudBoss = this;
 
@@ -413,6 +414,7 @@ public class CloudBoss : MonoBehaviour
                 transform.position.z
             );
 
+            Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
             GameObject sludge = Instantiate(weakSpotPrefab, randomPosition, Quaternion.identity);
             yield return new WaitForSeconds(0.25f);
         }

@@ -209,7 +209,7 @@ public class WaveManager : MonoBehaviour
         titleCard.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         titleCard.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         //Show wave info
         waveNumText.text = "Wave " + currentWave;
