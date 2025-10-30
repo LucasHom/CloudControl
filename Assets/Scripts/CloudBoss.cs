@@ -31,6 +31,9 @@ public class CloudBoss : MonoBehaviour
     [SerializeField] private PigeonManager pigeonManager;
     [SerializeField] private CitizenManager citizenManager;
     [SerializeField] private GameObject endScreen;
+    [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private GameObject titleCard;
+    [SerializeField] private ShopManager shopManager;
 
     [SerializeField] private GameObject waterPellet;
 
@@ -54,29 +57,47 @@ public class CloudBoss : MonoBehaviour
         
         yield return StartCoroutine(DRAMATICEntrance());
 
-        yield return StartCoroutine(PhaseOne());
-        for (int i = 0; i < 3; i++)
-        {
-            citizenManager.GiveThanks();
-            yield return new WaitForSeconds(0.8f);
-        }
+        //yield return StartCoroutine(PhaseOne());
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    citizenManager.GiveThanks();
+        //    yield return new WaitForSeconds(0.8f);
+        //}
 
-        yield return StartCoroutine(TakeDamage()); //break
+        //yield return StartCoroutine(TakeDamage()); //break
 
-        yield return StartCoroutine(PhaseTwo());
-        for (int i = 0; i < 3; i++)
-        {
-            citizenManager.GiveThanks();
-            yield return new WaitForSeconds(0.8f);
-        }
+        //yield return StartCoroutine(PhaseTwo());
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    citizenManager.GiveThanks();
+        //    yield return new WaitForSeconds(0.8f);
+        //}
 
-        yield return StartCoroutine(TakeDamage()); //break
+        //yield return StartCoroutine(TakeDamage()); //break
 
-        yield return StartCoroutine(PhaseThree());
+        //yield return StartCoroutine(PhaseThree());
 
         //turn off shop toggle
+        shopManager.isShopToggleReady = false;
 
         yield return StartCoroutine(CloudDie());
+
+        //Title shot
+        yield return new WaitForSeconds(0.7f);
+        transform.position = new Vector3(transform.position.x, 16f, transform.position.z);
+        yield return new WaitForSeconds(0.7f);
+        transform.position = new Vector3(transform.position.x, 25f, transform.position.z);
+        yield return new WaitForSeconds(0.7f);
+        transform.position = new Vector3(transform.position.x, 35f, transform.position.z);
+
+        //Show title
+        yield return new WaitForSeconds(1f);
+        titleCard.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        titleCard.SetActive(false);
+
+        cameraManager.SwitchToGameView();
+        yield return new WaitForSeconds(2f);
 
         //Endgame screen
         endScreen.GetComponent<EndScreen>().didWin = true;
@@ -254,14 +275,17 @@ public class CloudBoss : MonoBehaviour
     {
         StartCoroutine(FadeOut(GetComponent<SpriteRenderer>(), 5f)); // fade now lasts 8 seconds
         StartCoroutine(Rain());
+
         for (int i = 0; i < 140; i++)
         {
             Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-6.5f, 6.5f), transform.position.y + Random.Range(-1.5f, 1), transform.position.z);
             Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
             yield return new WaitForSeconds(0.04f);
         }
+        transform.position = new Vector3(transform.position.x, 10f, transform.position.z);
+        cameraManager.SwitchToWaveView();
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.5f);
         yield return StartCoroutine(citizenManager.ShowEcstatic());
 
     }

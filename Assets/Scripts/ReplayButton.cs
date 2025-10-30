@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ReplayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -37,6 +38,8 @@ public class ReplayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         transform.localScale = new Vector3(1f, 1f, 1f);
         yield return new WaitForSecondsRealtime(0.06f);
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.05f;
-        Debug.Log("Clicked replay");
+        Time.timeScale = 1f;
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }

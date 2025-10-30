@@ -42,6 +42,7 @@ public class WaveManager : MonoBehaviour
     //Transition Text
     [SerializeField] TextMeshProUGUI waveNumText;
     [SerializeField] TextMeshProUGUI waveDescriptionText;
+    [SerializeField] private GameObject titleCard;
 
     //Shop
     private ShopManager shopManager;
@@ -202,6 +203,15 @@ public class WaveManager : MonoBehaviour
         currentWave++;
         yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
         yield return new WaitForSeconds(2f);
+
+        //show title card
+        yield return new WaitForSeconds(1f);
+        titleCard.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        titleCard.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+
+        //Show wave info
         waveNumText.text = "Wave " + currentWave;
         waveDescriptionText.text = waveInfo.allWaves[currentWaveIndex].description;
         EnableTransitionText();
