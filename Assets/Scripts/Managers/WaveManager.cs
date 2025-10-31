@@ -75,6 +75,7 @@ public class WaveManager : MonoBehaviour
     // Tutorial
     private bool tutorialEnabled = true; // Set to false to disable tutorial popups
     [SerializeField] private GameObject tutorialPrefab;
+    [SerializeField] private GameObject CCPVan;
 
     //Testing
     [SerializeField] private bool testBossWave;
@@ -136,10 +137,6 @@ public class WaveManager : MonoBehaviour
             ButtonSecurityManager.Unlock("ShieldBubblePipeButton");
         });
 
-
-        
-
-
         cloudHeightChange = (maxCloudHeight - cloudMovement.startingCloudHeight) / maxWaves;
         citizenHealthIndicator.SetActive(false);
 
@@ -190,7 +187,11 @@ public class WaveManager : MonoBehaviour
     private IEnumerator GameLoop()
     {
         //Return to game view
-        yield return new WaitForSeconds(2f);
+        
+        //van appear
+        CCPVan.SetActive(true);
+        yield return CCPVan.GetComponent<CCPVan>().StartCoroutine("WaitAndMove");
+
 
         // move, reload, shoot tutorial
         if (tutorialEnabled)

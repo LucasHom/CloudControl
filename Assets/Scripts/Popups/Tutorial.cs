@@ -8,6 +8,10 @@ public class Tutorial : MonoBehaviour
     //tutorial name is either player or gold
     public string tutorialName = "player";
 
+    //Welcome
+    [SerializeField] private GameObject welcome;
+    [SerializeField] private GameObject welcome_anykey;
+
     //Part 1: Move, Reload, Shoot
     [SerializeField] private GameObject part1;
     private bool moveda = false;
@@ -44,6 +48,7 @@ public class Tutorial : MonoBehaviour
 
     private void Awake()
     {
+        welcome.SetActive(false);
         part1.SetActive(false);
         part2.SetActive(false);
         part3.SetActive(false);
@@ -77,6 +82,7 @@ public class Tutorial : MonoBehaviour
     {
         //Pause the game
         Time.timeScale = 0f;
+        yield return StartCoroutine(confirmWelcome());
         yield return StartCoroutine(confirmBasics());
         yield return StartCoroutine(confirmSpecial());
         yield return StartCoroutine(confirmGoal());
@@ -85,10 +91,26 @@ public class Tutorial : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //welcome
+    private IEnumerator confirmWelcome()
+    {
+        welcome.SetActive(true);
+        welcome_anykey.SetActive(false);
+        //delay to not accidentaly skip
+        yield return new WaitForSecondsRealtime(1.5f);
+        welcome_anykey.SetActive(true);
+        while (!Input.anyKeyDown)
+        {
+            yield return null;
+        }
+        welcome.SetActive(false);
+    }
+
     //move, reload, shoot
     private IEnumerator confirmBasics()
     {
         part1.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.5f);
         while (!moveda || !movedd || !shot || !reloaded)
         {
             if (Input.GetKeyDown(KeyCode.A))
