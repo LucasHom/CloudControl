@@ -235,7 +235,7 @@ public class CloudBoss : MonoBehaviour
         }
 
         //subphase3
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 5; i++)
         {
             Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y + Random.Range(-1, 0), transform.position.z);
             SpawnSludge("all", 7f, randomPosition);
@@ -385,7 +385,7 @@ public class CloudBoss : MonoBehaviour
 
             Vector3 randomPosition = new Vector3(
                 x,
-                transform.position.y - 2.3f,
+                transform.position.y - 2.05f,
                 transform.position.z
             );
 
@@ -410,7 +410,7 @@ public class CloudBoss : MonoBehaviour
 
             Vector3 randomPosition = new Vector3(
                 x,
-                transform.position.y - 1.2f,
+                transform.position.y - 1.05f,
                 transform.position.z
             );
 

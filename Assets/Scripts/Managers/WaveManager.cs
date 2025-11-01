@@ -186,8 +186,6 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator GameLoop()
     {
-        //Return to game view
-        
         //van appear
         CCPVan.SetActive(true);
         yield return CCPVan.GetComponent<CCPVan>().StartCoroutine("WaitAndMove");
@@ -208,7 +206,7 @@ public class WaveManager : MonoBehaviour
         //show title card
         yield return new WaitForSeconds(1f);
         titleCard.SetActive(true);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3.5f);
         titleCard.SetActive(false);
         yield return new WaitForSeconds(1f);
 
