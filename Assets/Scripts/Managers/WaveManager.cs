@@ -403,7 +403,7 @@ public class WaveManager : MonoBehaviour
         waveDescriptionText.enabled = false;
     }
 
-    private void ToggleCitizenHealth()
+    public void ToggleCitizenHealth()
     {
         citizenHealthIndicator.SetActive(!citizenHealthIndicator.activeSelf);
     }

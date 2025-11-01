@@ -34,6 +34,7 @@ public class CloudBoss : MonoBehaviour
     [SerializeField] private CameraManager cameraManager;
     [SerializeField] private GameObject titleCard;
     [SerializeField] private ShopManager shopManager;
+    [SerializeField] private WaveManager waveManager;
 
     [SerializeField] private GameObject waterPellet;
 
@@ -78,6 +79,8 @@ public class CloudBoss : MonoBehaviour
         yield return StartCoroutine(PhaseThree());
 
         //turn off shop toggle
+        waveManager.ToggleCitizenHealth();
+        shopManager.ToggleCurrency();
         shopManager.isShopToggleReady = false;
 
         yield return StartCoroutine(CloudDie());

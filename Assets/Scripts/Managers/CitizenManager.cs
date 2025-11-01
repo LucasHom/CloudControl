@@ -79,6 +79,7 @@ public class CitizenManager : MonoBehaviour
 
     //Animation
     [SerializeField] private Animator animator;
+    [SerializeField] private Sprite sittingSprite;
 
 
     void Start()
@@ -359,6 +360,8 @@ public class CitizenManager : MonoBehaviour
     public void EndGame()
     {
         endScreen.GetComponent<EndScreen>().didWin = false;
+        animator.enabled = false;
+        spriteRenderer.sprite = sittingSprite;
         endScreen.SetActive(true);
     }
 

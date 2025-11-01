@@ -7677,6 +7677,7 @@ MonoBehaviour:
   healthPS: {fileID: 1190923634}
   shopManager: {fileID: 839196641}
   animator: {fileID: 1602434349}
+  sittingSprite: {fileID: -783033533, guid: cdd674e134a557741af7e762353e765b, type: 3}
 --- !u!50 &564262035
 Rigidbody2D:
   serializedVersion: 4
@@ -34759,6 +34760,7 @@ MonoBehaviour:
   cameraManager: {fileID: 839196640}
   titleCard: {fileID: 851909405}
   shopManager: {fileID: 839196641}
+  waveManager: {fileID: 839196639}
   waterPellet: {fileID: 7848697821730185877, guid: b4c56870f5f75164d83a1a401b74553e, type: 3}
 --- !u!4 &1947692095 stripped
 Transform:
