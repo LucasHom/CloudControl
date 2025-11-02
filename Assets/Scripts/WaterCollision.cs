@@ -20,24 +20,28 @@ public class WaterCollision : MonoBehaviour
         }
         else if (col.tag == "SupportBall")
         {
+            SFXManager.Instance.PlaySFX("waterHit");
             waterHitCount++;
             col.GetComponent<SupportBall>().Grow();
             Destroy(transform.parent.gameObject);
         }
         else if (col.tag == "WeakSpot")
         {
+            SFXManager.Instance.PlaySFX("waterHit");
             waterHitCount++;
             col.GetComponent<CloudWeakSpot>().HitByWater();
             Destroy(transform.parent.gameObject);
         }
         else if (col.tag == "WeakSpawner")
         {
+            SFXManager.Instance.PlaySFX("waterHit");
             waterHitCount++;
             col.GetComponent<CloudWeakSpawner>().HitByWater();
             Destroy(transform.parent.gameObject);
         }
         else if (col.tag == "BallGuard")
         {
+            SFXManager.Instance.PlaySFX("blocked");
             waterHitCount++;
             Transform guardedBall = col.gameObject.transform.parent;
             guardedBall.GetComponent<HitGuard>().ActivateHitGuardPS();
@@ -50,6 +54,7 @@ public class WaterCollision : MonoBehaviour
         }
         else if (col.gameObject.tag == "Medpack")
         {
+            SFXManager.Instance.PlaySFX("heal");
             waterHitCount++;
             col.GetComponent<Medpack>().Bounce();
             Destroy(transform.parent.gameObject);

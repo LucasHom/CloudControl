@@ -77,6 +77,7 @@ public abstract class PurchaseButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private IEnumerator ClickEffect()
     {
+        SFXManager.Instance.PlaySFX("buy");
         newText.SetActive(false);
         transform.localScale = new Vector3(1f, 1f, 1f);
         yield return new WaitForSecondsRealtime(0.06f);

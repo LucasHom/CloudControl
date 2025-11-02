@@ -125,61 +125,12 @@ public class GenerateWater : MonoBehaviour
         isReloadIconFlashing = false;
     }
 
-
-    //private IEnumerator ReloadWater()
-    //{
-    //    isReloading = true;
-
-    //    while ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.Mouse1)) && remainingWater < maxWater)
-    //    {
-    //        remainingWater += reloadAmount;
-
-    //        if (remainingWater > maxWater)
-    //        {
-    //            remainingWater = maxWater;
-    //        }
-
-    //        canShoot = true;
-    //        canShowReloadIcon = false;
-    //        //Debug.Log(remainingWater);
-
-    //        yield return new WaitForSeconds(reloadDelay);
-    //    }
-    //    isReloading = false;
-    //    playerScript.isReloading = false;
-    //}
-
-
-
-    //private IEnumerator ReloadWater()
-    //{
-    //    isReloading = true;
-
-    //    while ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.Mouse1)) && remainingWater < maxWater)
-    //    {
-    //        remainingWater += reloadAmount;
-    //        if (remainingWater > maxWater)
-    //        {
-    //            remainingWater = maxWater;
-    //        }
-
-    //        canShoot = true;
-    //        canShowReloadIcon = false;
-
-    //        yield return new WaitForSeconds(reloadDelay);
-    //    }
-
-    //    reloadCoroutine = null; // reset coroutine reference
-    //}
-
     private IEnumerator ReloadWater()
     {
         isReloading = true;
 
         while (remainingWater < maxWater)
         {
-
-
             remainingWater += reloadAmount;
 
             if (remainingWater > maxWater)
@@ -221,6 +172,7 @@ public class GenerateWater : MonoBehaviour
     //Old shoot water logic
     void ShootWater()
     {
+        SFXManager.Instance.PlaySFX("shoot");
         waterShotCount++;
         GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
         //GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position, Quaternion.identity);
@@ -248,6 +200,7 @@ public class GenerateWater : MonoBehaviour
 
         while (remainingWater > 0)
         {
+            SFXManager.Instance.PlaySFX("shoot");
             yield return new WaitForSeconds(0.01f);
             GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
 

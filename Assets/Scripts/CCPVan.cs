@@ -29,9 +29,11 @@ public class CCPVan : MonoBehaviour
 
     private IEnumerator WaitAndMove()
     {
+        SFXManager.Instance.PlaySFX("carPass");
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(MoveToTarget(new Vector3(0, -1.69f, 0), 3f));
         yield return new WaitForSeconds(0.7f);
+        SFXManager.Instance.PlaySFX("playerHit");
         generateWater.enabled = true;
         player.SetActive(true);
         yield return new WaitForSeconds(0.7f);

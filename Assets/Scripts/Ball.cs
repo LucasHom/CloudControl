@@ -140,8 +140,10 @@ public class Ball : MonoBehaviour
         if (hasSplit) return;
         hasSplit = true;
 
+
         if (nextBall != null)
         {
+            SFXManager.Instance.PlaySFX("waterHit");
             GameObject ball01 = Instantiate(nextBall, rb2d.position + Vector2.right / 4f, Quaternion.identity);
             GameObject ball02 = Instantiate(nextBall, rb2d.position + Vector2.left / 4f, Quaternion.identity);
 

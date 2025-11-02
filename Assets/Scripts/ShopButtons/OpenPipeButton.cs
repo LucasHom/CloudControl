@@ -34,6 +34,7 @@ public class OpenPipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
+        SFXManager.Instance.PlaySFX("select");
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.2f;
     }
 

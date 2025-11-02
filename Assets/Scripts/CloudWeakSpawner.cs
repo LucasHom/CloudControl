@@ -42,6 +42,7 @@ public class CloudWeakSpawner : MonoBehaviour
         }
         if (health <= 0 && popCoroutine == null)
         {
+            SFXManager.Instance.PlaySFX("break");
             popCoroutine = StartCoroutine(PopEffect());
 
         }

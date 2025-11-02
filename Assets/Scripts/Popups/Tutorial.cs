@@ -58,6 +58,7 @@ public class Tutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SFXManager.Instance.PlaySFX("open");
         if (tutorialName == "player")
         {
             StartCoroutine(confirmPartOneTwoThree());
@@ -87,6 +88,7 @@ public class Tutorial : MonoBehaviour
         yield return StartCoroutine(confirmSpecial());
         yield return StartCoroutine(confirmGoal());
         //Resume
+        SFXManager.Instance.PlaySFX("close");
         Time.timeScale = 1f;
         Destroy(gameObject);
     }
@@ -103,6 +105,7 @@ public class Tutorial : MonoBehaviour
         {
             yield return null;
         }
+        SFXManager.Instance.PlaySFX("select");
         welcome.SetActive(false);
     }
 
@@ -113,27 +116,31 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.5f);
         while (!moveda || !movedd || !shot || !reloaded)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && !moveda)
             {
+                SFXManager.Instance.PlaySFX("select");
                 moveda = true;
                 aimage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 stopButton(buttonAnimator_A);
 
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) && !movedd)
             {
+                SFXManager.Instance.PlaySFX("select");
                 movedd = true;
                 dimage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 stopButton(buttonAnimator_D);
             }
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !shot)
             {
+                SFXManager.Instance.PlaySFX("select");
                 shot = true;
                 m0image.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 stopButton(buttonAnimator_mouse0);
             }
-            if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.S) && !reloaded)
             {
+                SFXManager.Instance.PlaySFX("select");
                 reloaded = true;
                 rimage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 simage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -152,8 +159,9 @@ public class Tutorial : MonoBehaviour
         part2.SetActive(true);
         while (!bursted)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetKeyDown(KeyCode.Mouse1) && !bursted)
             {
+                SFXManager.Instance.PlaySFX("select");
                 bursted = true;
                 m1image.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 stopButton(buttonAnimator_mouse1);
@@ -176,6 +184,7 @@ public class Tutorial : MonoBehaviour
         {
             yield return null;
         }
+        SFXManager.Instance.PlaySFX("select");
         part3.SetActive(false);
     }
 
@@ -197,6 +206,7 @@ public class Tutorial : MonoBehaviour
         {
             yield return null;
         }
+        SFXManager.Instance.PlaySFX("select");
         bimage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
         stopButton(buttonAnimator_B);
         yield return new WaitForSecondsRealtime(0.8f);

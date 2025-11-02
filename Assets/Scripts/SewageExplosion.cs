@@ -8,6 +8,7 @@ public class SewageExplosion : MonoBehaviour
 
     void Start()
     {
+        SFXManager.Instance.PlaySFX("explosion");
         animator = GetComponent<Animator>();
 
         float animLength = animator.GetCurrentAnimatorStateInfo(0).length;

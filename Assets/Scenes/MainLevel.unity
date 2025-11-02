@@ -14087,6 +14087,7 @@ GameObject:
   - component: {fileID: 839196641}
   - component: {fileID: 839196642}
   - component: {fileID: 839196643}
+  - component: {fileID: 839196645}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -14275,6 +14276,49 @@ MonoBehaviour:
   timeBetweenSpawn: 0.5
   allWaves: []
   testingMode: 1
+--- !u!114 &839196645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839196636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8a93d0e932325489c438c4f51cb242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffects:
+  - name: waterHit
+    clip: {fileID: 8300000, guid: 8769577b7e9e28845a863ab6c2d88d96, type: 3}
+  - name: heal
+    clip: {fileID: 8300000, guid: d58bcff157a103c498397479bf59d9b1, type: 3}
+  - name: blocked
+    clip: {fileID: 8300000, guid: 952e17d45df2d254e87f6fa400fd0b0a, type: 3}
+  - name: midgeHit
+    clip: {fileID: 8300000, guid: d291d90fc35854c4c9bf1ae34f4635b2, type: 3}
+  - name: playerHit
+    clip: {fileID: 8300000, guid: d30e236684b74dc4aa4bec875506ac1c, type: 3}
+  - name: shoot
+    clip: {fileID: 8300000, guid: 1b6dc5ca1287bca49a4337f4db124c3d, type: 3}
+  - name: explosion
+    clip: {fileID: 8300000, guid: ea17cd2842a9c9545be31a028efa5d41, type: 3}
+  - name: mad
+    clip: {fileID: 8300000, guid: 7c1a6b5924d39c94da07e834c163e76c, type: 3}
+  - name: break
+    clip: {fileID: 8300000, guid: 265217b528224ab428d82cd7c99b6d07, type: 3}
+  - name: select
+    clip: {fileID: 8300000, guid: 7d9f55d640ff4c9469865de54ef0c6e9, type: 3}
+  - name: buy
+    clip: {fileID: 8300000, guid: f8f27de5bdeaa054d8a15f08742c4943, type: 3}
+  - name: open
+    clip: {fileID: 8300000, guid: 4315ee369355f66488016cd9e2a61a78, type: 3}
+  - name: close
+    clip: {fileID: 8300000, guid: 6478454efcfaff04099535ed5d9bfcba, type: 3}
+  - name: carPass
+    clip: {fileID: 8300000, guid: 5b9a06f0a1d97e84db146a2bb460d70e, type: 3}
+  - name: titleCard
+    clip: {fileID: 8300000, guid: 9d136a0266d47304d93621b1e61398c0, type: 3}
 --- !u!1 &851909405
 GameObject:
   m_ObjectHideFlags: 0

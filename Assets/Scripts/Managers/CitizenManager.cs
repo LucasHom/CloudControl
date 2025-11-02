@@ -125,11 +125,10 @@ public class CitizenManager : MonoBehaviour
                 StartCoroutine(FlashDuringInvincibility());
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.T)) 
-        { 
-            GiveThanks();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    GiveThanks();
+        //}
 
     }
 
@@ -343,6 +342,7 @@ public class CitizenManager : MonoBehaviour
     }
     public IEnumerator freezeCitizen()
     {
+        SFXManager.Instance.PlaySFX("midgeHit");
         timesMidgeHit++;
 
         if (citizenIsFrozen) yield break;
@@ -367,6 +367,7 @@ public class CitizenManager : MonoBehaviour
 
     public void AttemptHeal()
     {
+        SFXManager.Instance.PlaySFX("heal");
         if (citizenHealth < maxCitizenHealth)
         {
             citizenHealth++;

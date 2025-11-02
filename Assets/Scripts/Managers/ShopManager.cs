@@ -84,9 +84,14 @@ public class ShopManager : MonoBehaviour
         shopContent.SetActive(!shopContent.activeSelf);
         if (shopContent.activeSelf)
         {
+            SFXManager.Instance.PlaySFX("open");
             GadgetPurchase.attemptingPurchase = false;
             GadgetPurchase.waitingForLocation = false;
             resetCurrencyIncrease();
+        }
+        else
+        {
+            SFXManager.Instance.PlaySFX("close");
         }
 
         //update reward amount text

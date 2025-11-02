@@ -37,6 +37,7 @@ public class CloudWeakSpot : MonoBehaviour
         }
         if (health <= 0 && popCoroutine == null)
         {
+            SFXManager.Instance.PlaySFX("break");
             popCoroutine = StartCoroutine(PopEffect());
             
         }
@@ -56,6 +57,7 @@ public class CloudWeakSpot : MonoBehaviour
 
     private IEnumerator PopEffect()
     {
+
         Vector3 originalScale = transform.localScale;
         Vector3 targetScale = originalScale * growAmount;
 

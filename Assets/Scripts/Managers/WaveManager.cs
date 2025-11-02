@@ -205,6 +205,7 @@ public class WaveManager : MonoBehaviour
 
         //show title card
         yield return new WaitForSeconds(1f);
+        SFXManager.Instance.PlaySFX("titleCard");
         titleCard.SetActive(true);
         yield return new WaitForSeconds(3.5f);
         titleCard.SetActive(false);
@@ -364,6 +365,7 @@ public class WaveManager : MonoBehaviour
         waveDescriptionText.text = "";
         EnableTransitionText();
 
+        SFXManager.Instance.PlaySFX("mad");
         yield return new WaitForSeconds(timeBetweenWave);
 
         cameraManager.SwitchToGameView();

@@ -142,6 +142,7 @@ public class Player : MonoBehaviour
     }
     public IEnumerator freezePlayer()
     {
+        SFXManager.Instance.PlaySFX("playerHit");
         timesHit++;
         if (playerIsFrozen) yield break;
 

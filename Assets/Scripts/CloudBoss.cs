@@ -95,6 +95,7 @@ public class CloudBoss : MonoBehaviour
 
         //Show title
         yield return new WaitForSeconds(1f);
+        SFXManager.Instance.PlaySFX("titleCard");
         titleCard.SetActive(true);
         yield return new WaitForSeconds(4f);
         titleCard.SetActive(false);
@@ -270,6 +271,7 @@ public class CloudBoss : MonoBehaviour
             Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
             yield return new WaitForSeconds(0.08f);
         }
+        SFXManager.Instance.PlaySFX("mad");
         yield return new WaitForSeconds(2f);
     }
 

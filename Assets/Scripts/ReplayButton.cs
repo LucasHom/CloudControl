@@ -39,6 +39,7 @@ public class ReplayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         yield return new WaitForSecondsRealtime(0.06f);
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.05f;
         Time.timeScale = 1f;
+        StopAllCoroutines();
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
