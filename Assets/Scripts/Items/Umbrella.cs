@@ -181,6 +181,7 @@ public class Umbrella : MonoBehaviour
 
     private IEnumerator TakeDamage(GameObject col)
     {
+        SFXManager.Instance.PlaySFX("whack");
         health--;
 
 

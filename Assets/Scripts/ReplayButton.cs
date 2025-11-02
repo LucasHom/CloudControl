@@ -35,6 +35,7 @@ public class ReplayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private IEnumerator ClickEffect()
     {
+        SFXManager.Instance.PlaySFX("select");
         transform.localScale = new Vector3(1f, 1f, 1f);
         yield return new WaitForSecondsRealtime(0.06f);
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.05f;

@@ -61,6 +61,8 @@ public class Net : MonoBehaviour
 
     private IEnumerator PopDestroySelf()
     {
+        Debug.Log("Popping net");
+        SFXManager.Instance.PlaySFX("whack");
         yield return PopEffect();
         activeNets.Remove(this);
         Destroy(gameObject);

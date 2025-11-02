@@ -14275,7 +14275,7 @@ MonoBehaviour:
   supportBallPrefab: {fileID: 6299765533239844623, guid: 051744ab5c274b049a95217847608fd8, type: 3}
   timeBetweenSpawn: 0.5
   allWaves: []
-  testingMode: 0
+  testingMode: 1
 --- !u!114 &839196645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14329,6 +14329,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6f9bab93c3c45204b8e4e7ce8682e1e6, type: 3}
   - name: reveal
     clip: {fileID: 8300000, guid: 3208dd9c96f56644c95db3922d17c268, type: 3}
+  - name: drumroll
+    clip: {fileID: 8300000, guid: 9b1b6e1bdda9add4186454fe38c9d0e5, type: 3}
+  - name: whack
+    clip: {fileID: 8300000, guid: 19ba52f7bc16c9f4c8bf63e8640ffad6, type: 3}
+  - name: gust
+    clip: {fileID: 0}
+  - name: shield
+    clip: {fileID: 0}
 --- !u!1 &851909405
 GameObject:
   m_ObjectHideFlags: 0

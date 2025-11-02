@@ -41,6 +41,7 @@ public class PopupUnitEffects : MonoBehaviour
     private IEnumerator PopShakeRoutine()
     {
         isShaking = true;
+        SFXManager.Instance.PlaySFX("drumroll");
 
         // Step 1: Shake
         yield return StartCoroutine(Shake());

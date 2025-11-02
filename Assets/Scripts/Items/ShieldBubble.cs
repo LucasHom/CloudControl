@@ -24,6 +24,7 @@ public class ShieldBubble : MonoBehaviour
     void Start()
     {
         numActive++;
+        SFXManager.Instance.PlaySFX("shoot");
         transform.localScale = new Vector2(0.2f, 0.2f);
         col2d = GetComponent<Collider2D>();
         col2d.isTrigger = true;
@@ -71,6 +72,9 @@ public class ShieldBubble : MonoBehaviour
             SpriteRenderer sp = GetComponent<SpriteRenderer>();
             sp.sortingLayerName = "Default";
             sp.sprite = activeSprite;
+
+            //Grow
+            SFXManager.Instance.PlaySFX("shield");
             StartCoroutine(GrowEffect());
             col2d.isTrigger = false;
         }
