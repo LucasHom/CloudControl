@@ -74,7 +74,7 @@ public class ShieldBubble : MonoBehaviour
             sp.sprite = activeSprite;
 
             //Grow
-            SFXManager.Instance.PlaySFX("shield");
+            SFXManager.Instance.PlaySFX("splat");
             StartCoroutine(GrowEffect());
             col2d.isTrigger = false;
         }
