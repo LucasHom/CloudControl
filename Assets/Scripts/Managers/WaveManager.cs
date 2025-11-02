@@ -279,8 +279,6 @@ public class WaveManager : MonoBehaviour
 
                 yield return new WaitForSeconds(timeBetweenWave);
             }
-
-        
         }
 
         //Wave 11: Bossfight
@@ -369,10 +367,17 @@ public class WaveManager : MonoBehaviour
 
         cameraManager.SwitchToGameView();
         StartCoroutine(cloudBoss.DeathByGlamour()); //Start bossfight
-        yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
+
+        //delay to allow for cinemachine to start belending
+        yield return new WaitForSeconds(0.1f);
+
+        //show UI
         DisableTransitionText();
         ToggleCitizenHealth();
         shopManager.ToggleCurrency();
+
+        yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
+
         shopManager.isShopToggleReady = true;
         shopManager.isBackgroundToggleReady = true;
 

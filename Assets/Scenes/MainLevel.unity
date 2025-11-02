@@ -14182,7 +14182,7 @@ MonoBehaviour:
   shieldBubbleImage: {fileID: 21300000, guid: ace317b06a71450498edca5b02800026, type: 3}
   tutorialPrefab: {fileID: 6555684292002418141, guid: 938ce1effc26f2048aca72393edbee27, type: 3}
   CCPVan: {fileID: 987799688}
-  testBossWave: 0
+  testBossWave: 1
 --- !u!114 &839196640
 MonoBehaviour:
   m_ObjectHideFlags: 0
