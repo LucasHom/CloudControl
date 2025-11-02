@@ -109,7 +109,8 @@ public class PopupUnitEffects : MonoBehaviour
         rectTransform.localScale = targetScale; // Ensure it reaches the target scale
         rectTransform.rotation = targetRotation; // Ensure the target rotation is reached
 
-        yield return new WaitForSecondsRealtime(0.21f); // Optional delay before shrinking back
+        SFXManager.Instance.PlaySFX("reveal");
+        yield return new WaitForSecondsRealtime(0.21f);
 
         // Shrink phase (with EaseOut)
         elapsedTime = 0f;

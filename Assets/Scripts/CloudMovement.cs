@@ -26,6 +26,7 @@ public class CloudMovement : MonoBehaviour
 
     public IEnumerator ChangeCloudHeight(float height)
     {
+        SFXManager.Instance.PlaySFX("rise");
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
         float elapsedTime = 0f;

@@ -394,6 +394,7 @@ public class WaveManager : MonoBehaviour
 
     private void EnableTransitionText()
     {
+        SFXManager.Instance.PlaySFX("defend");
         waveNumText.enabled = true;
         waveDescriptionText.enabled = true;
     }

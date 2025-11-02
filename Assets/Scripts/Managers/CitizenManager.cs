@@ -369,9 +369,9 @@ public class CitizenManager : MonoBehaviour
 
     public void AttemptHeal()
     {
-        SFXManager.Instance.PlaySFX("heal");
         if (citizenHealth < maxCitizenHealth)
         {
+            SFXManager.Instance.PlaySFX("heal");
             citizenHealth++;
             healthPS.Play();
         }

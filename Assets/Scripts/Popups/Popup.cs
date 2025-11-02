@@ -49,6 +49,7 @@ public class Popup : MonoBehaviour
                 // Check if the user presses any key
                 if (Input.anyKeyDown)
                 {
+                    SFXManager.Instance.PlaySFX("select");
                     Time.timeScale = 1f; // Resume the game
                     IsPopupOpen = false;
                     Destroy(gameObject);

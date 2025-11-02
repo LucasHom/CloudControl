@@ -14323,6 +14323,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9d136a0266d47304d93621b1e61398c0, type: 3}
   - name: splat
     clip: {fileID: 8300000, guid: 437ef2497f10fd34f989cd45b41e3f63, type: 3}
+  - name: defend
+    clip: {fileID: 8300000, guid: 1dcc4262904918b49bcd2a4ea13fd0d5, type: 3}
+  - name: rise
+    clip: {fileID: 8300000, guid: 6f9bab93c3c45204b8e4e7ce8682e1e6, type: 3}
+  - name: reveal
+    clip: {fileID: 8300000, guid: 3208dd9c96f56644c95db3922d17c268, type: 3}
 --- !u!1 &851909405
 GameObject:
   m_ObjectHideFlags: 0
