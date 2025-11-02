@@ -34,7 +34,7 @@ public class OpenPipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        SFXManager.Instance.PlaySFX("select");
+
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.2f;
     }
 
@@ -44,6 +44,7 @@ public class OpenPipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     private IEnumerator ClickEffect()
     {
+        
         transform.localScale = new Vector3(1f, 1f, 1f);
         yield return new WaitForSecondsRealtime(0.06f);
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.2f;

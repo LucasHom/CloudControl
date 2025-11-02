@@ -57,6 +57,7 @@ public class Ball : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
+            SFXManager.Instance.PlaySFX("splat");
             if (getPureName(gameObject.name) == "ball_large" || getPureName(gameObject.name) == "ball_large_guarded")
             {
                 GameObject large_puddle = Instantiate(largePuddle, new Vector3(rb2d.position.x, puddleHeight, 0f), Quaternion.identity);

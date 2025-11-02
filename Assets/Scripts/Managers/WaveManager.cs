@@ -190,7 +190,6 @@ public class WaveManager : MonoBehaviour
         CCPVan.SetActive(true);
         yield return CCPVan.GetComponent<CCPVan>().StartCoroutine("WaitAndMove");
 
-
         // move, reload, shoot tutorial
         if (tutorialEnabled)
         {

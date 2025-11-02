@@ -172,7 +172,7 @@ public class GenerateWater : MonoBehaviour
     //Old shoot water logic
     void ShootWater()
     {
-        SFXManager.Instance.PlaySFX("shoot");
+        //SFXManager.Instance.PlaySFX("shoot");
         waterShotCount++;
         GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
         //GameObject waterProjectile = Instantiate(waterProjectilePrefab, shootPoint.position, Quaternion.identity);

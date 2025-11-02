@@ -165,6 +165,7 @@ public class CitizenManager : MonoBehaviour
 
     public void GiveThanks()
     {
+        SFXManager.Instance.PlaySFX("buy");
         int thanksAmount = calcThanks();
         rewardsCollected += thanksAmount;
         possibleRewards += maxThanks;
@@ -359,6 +360,7 @@ public class CitizenManager : MonoBehaviour
 
     public void EndGame()
     {
+        SFXManager.Instance.PlaySFX("gameOver");
         endScreen.GetComponent<EndScreen>().didWin = false;
         animator.enabled = false;
         spriteRenderer.sprite = sittingSprite;

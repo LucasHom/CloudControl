@@ -58,7 +58,6 @@ public class Tutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SFXManager.Instance.PlaySFX("open");
         if (tutorialName == "player")
         {
             StartCoroutine(confirmPartOneTwoThree());
@@ -88,7 +87,6 @@ public class Tutorial : MonoBehaviour
         yield return StartCoroutine(confirmSpecial());
         yield return StartCoroutine(confirmGoal());
         //Resume
-        SFXManager.Instance.PlaySFX("close");
         Time.timeScale = 1f;
         Destroy(gameObject);
     }

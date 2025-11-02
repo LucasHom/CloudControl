@@ -80,7 +80,7 @@ public abstract class GadgetPurchase : PurchaseButton
 
     private IEnumerator WaitForClickThenUpgrade()
     {
-
+        SFXManager.Instance.PlaySFX("select");
         bool clicked = false;
         while (!clicked)
         {
