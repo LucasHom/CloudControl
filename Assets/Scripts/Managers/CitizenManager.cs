@@ -242,7 +242,10 @@ public class CitizenManager : MonoBehaviour
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY + 0.6f, 0f);
 
         Color startColor = Color.white;
+        Color bonusStartColor = new Color(247f / 255f, 197f / 255f, 38f / 255f, 1f);
+
         Color targetColor = new Color(1f, 1f, 1f, 0f);
+        Color bonusTargetColor = new Color(247f / 255f, 197f / 255f, 38f / 255f, 0f);
 
         float startTime = Time.time;
         float glideDuration = 0.8f;
@@ -254,6 +257,7 @@ public class CitizenManager : MonoBehaviour
             thanksReaction.GetComponent<RectTransform>().position = Vector3.Lerp(startPosition, targetPosition, glideProgress);
             thanksReaction.GetComponent<Image>().color = Color.Lerp(startColor, targetColor, glideProgress);
             thanksEarned.color = Color.Lerp(startColor, targetColor, glideProgress);
+            bonusText.GetComponent<TextMeshProUGUI>().color = Color.Lerp(bonusStartColor, bonusTargetColor, glideProgress);
 
             yield return null;
         }

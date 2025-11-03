@@ -136,14 +136,15 @@ public class Tutorial : MonoBehaviour
                 m0image.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 stopButton(buttonAnimator_mouse0);
             }
-            if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.S) && !reloaded)
+            //if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.S) && !reloaded)
+            if (Input.GetKeyDown(KeyCode.S) && !reloaded)
             {
                 SFXManager.Instance.PlaySFX("select");
                 reloaded = true;
                 rimage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 simage.color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 stopButton(buttonAnimator_S);
-                stopButton(buttonAnimator_R);
+                //stopButton(buttonAnimator_R);
             }
             yield return null;
         }
