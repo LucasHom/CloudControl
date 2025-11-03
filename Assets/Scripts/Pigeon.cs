@@ -27,7 +27,7 @@ public class Pigeon : MonoBehaviour
 
     //For popup
     public static bool showPopup = false;
-    private static bool alreadyShowedPopup = false;
+    public static bool alreadyShowedPopup = false;
 
     void Start()
     {

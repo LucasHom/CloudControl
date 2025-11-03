@@ -61,6 +61,7 @@ public class CitizenManager : MonoBehaviour
     [SerializeField] private Sprite neutralReaction;
     [SerializeField] private Sprite worriedReaction;
     [SerializeField] private Sprite sadReaction;
+    [SerializeField] private GameObject bonusText;
 
 
     //Calculate Thanks
@@ -172,7 +173,19 @@ public class CitizenManager : MonoBehaviour
         updateReaction(thanksAmount);
         shopManager.StartIncreaseCurrency(thanksAmount);
         coinPS.Play();
-        StartCoroutine(ShowReaction());
+        StartCoroutine(ShowReaction(false));
+    }
+
+    public void GiveBonusThanks()
+    {
+        SFXManager.Instance.PlaySFX("buy");
+        int thanksAmount = calcThanks();
+        rewardsCollected += thanksAmount;
+        possibleRewards += maxThanks;
+        updateReaction(thanksAmount);
+        shopManager.StartIncreaseCurrency(thanksAmount);
+        coinPS.Play();
+        StartCoroutine(ShowReaction(true));
     }
 
 
@@ -218,8 +231,12 @@ public class CitizenManager : MonoBehaviour
     }
 
 
-    private IEnumerator ShowReaction()
+    private IEnumerator ShowReaction(bool bonus)
     {
+        if (bonus)
+        {
+            bonusText.SetActive(true);
+        }
         thanksReaction.SetActive(true);
         Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY, 0f);
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY + 0.6f, 0f);
@@ -241,6 +258,7 @@ public class CitizenManager : MonoBehaviour
             yield return null;
         }
 
+        bonusText.SetActive(false);
         thanksReaction.SetActive(false);
     }
 
@@ -374,6 +392,10 @@ public class CitizenManager : MonoBehaviour
             SFXManager.Instance.PlaySFX("heal");
             citizenHealth++;
             healthPS.Play();
+        }
+        else
+        {
+            GiveBonusThanks();
         }
         
     }

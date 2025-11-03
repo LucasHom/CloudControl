@@ -41,6 +41,7 @@ public class ReplayButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         transform.localScale = new Vector3(1f, 1f, 1f) * 1.05f;
         Time.timeScale = 1f;
         StopAllCoroutines();
+        WaveManager.ResetStatics();
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }

@@ -170,6 +170,51 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(GameLoop());
     }
 
+    public static void ResetStatics()
+    {
+        // --- Player & Citizen State ---
+        Player.timesHit = 0;
+        CitizenManager.rewardsCollected = 0;
+        CitizenManager.possibleRewards = 0;
+        CitizenManager.timesMidgeHit = 0;
+
+        // --- Combat & Projectile Tracking ---
+        Ball.numActiveBalls = 0;
+        GenerateWater.waterShotCount = 0;
+        WaterCollision.waterHitCount = 0;
+
+        // --- Active Item Counters ---
+        Umbrella.activeUmbrellas = new Stack<Umbrella>();
+        Umbrella.mostActiveUmbrellasEver = 0;
+        Net.activeNets = new List<Net>();
+        Medpack.activeMedpacks = 0;
+
+        // --- Pipe Systems ---
+        WaterPipe.activeWaterPipes = 0;
+        FreezePipe.activeFreezePipes = default;  // assuming int or struct
+        ShieldBubblePipe.activeShieldBubblePipes = 0;
+
+        // --- Cloud & Boss Systems ---
+        CloudWeakSpawner.weakSpawnersActive = 0;
+        CloudWeakSpot.weakSpotsActive = 0;
+
+        // --- Defense / Shields ---
+        ShieldBubble.numActive = 0;
+
+        // --- Shop & Gadget UI ---
+        GadgetPurchase.locationSelected = false;
+        GadgetPurchase.waitingForLocation = false;
+        GadgetPurchase.recntlyClickedGButton = null;
+        GadgetPurchase.purchaseAction = null;
+        GadgetPurchase.nextPipe = null;
+        GadgetPurchase.attemptingPurchase = false;
+        Popup.IsPopupOpen = false;
+
+        // --- Event / Dialogue Systems ---
+        Pigeon.showPopup = false;
+        Pigeon.alreadyShowedPopup = false;
+    }
+
 
     void Update()
     {
@@ -191,6 +236,7 @@ public class WaveManager : MonoBehaviour
         yield return CCPVan.GetComponent<CCPVan>().StartCoroutine("WaitAndMove");
 
         // move, reload, shoot tutorial
+        SFXManager.Instance.PlayLoopingMusic("casualSong");
         if (tutorialEnabled)
         {
             // Set tutorial name to "player" for the first part
