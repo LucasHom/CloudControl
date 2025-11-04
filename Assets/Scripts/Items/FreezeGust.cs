@@ -64,6 +64,7 @@ public class FreezeGust : MonoBehaviour
         GameObject col = collision.gameObject;
         if (col.tag == "Ball")
         {
+            SFXManager.Instance.PlaySFX("chill");
             HitPS.Play();
             col.GetComponent<Ball>().StartFreeze();
         }

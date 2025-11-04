@@ -42,6 +42,7 @@ public class EndScreen : MonoBehaviour
 
         if (didWin)
         {
+            SFXManager.Instance.PlaySFX("shine");
             resultText.color = new Color(244f / 255f, 195f / 255f, 38f / 255f);
             midgewasText.color = new Color(244f / 255f, 195f / 255f, 38f / 255f);
             resultText.text = "protected";
@@ -50,6 +51,7 @@ public class EndScreen : MonoBehaviour
         }
         else
         {
+            SFXManager.Instance.PlaySFX("gameOver");
             resultText.text = "slimed out";
             midgeReaction.GetComponent<Image>().sprite = sad;
         }
@@ -71,36 +73,43 @@ public class EndScreen : MonoBehaviour
         
         //statHeaderText.text += "Accuracy:\n";
         //statResultText.text += $"{Mathf.Ceil(WaterCollision.waterHitCount / GenerateWater.waterShotCount)}%\n";
+        SFXManager.Instance.PlaySFX("explosion");
         statHeaderText.text += "Water shot:\n";
         statResultText.text += $"{GenerateWater.waterShotCount}\n";
 
         //Possible Rewards
         yield return new WaitForSecondsRealtime(0.4f);
+        SFXManager.Instance.PlaySFX("explosion");
         statHeaderText.text += "Possible Rewards:\n";
         statResultText.text += $"${CitizenManager.possibleRewards}\n";
 
         //Rewards Collected
         yield return new WaitForSecondsRealtime(0.4f);
+        SFXManager.Instance.PlaySFX("explosion");
         statHeaderText.text += "Rewards Collected:\n";
         statResultText.text += $"${CitizenManager.rewardsCollected}\n";
 
         //Times hit
         yield return new WaitForSecondsRealtime(0.4f);
+        SFXManager.Instance.PlaySFX("explosion");
         statHeaderText.text += "Times Hit:\n";
         statResultText.text += $"{Player.timesHit}\n";
 
         //Times Midge hit
         yield return new WaitForSecondsRealtime(0.4f);
+        SFXManager.Instance.PlaySFX("explosion");
         statHeaderText.text += "Times Midge Hit:\n";
         statResultText.text += $"{CitizenManager.timesMidgeHit}\n";
 
         //Most Umbrellas Stacked
         yield return new WaitForSecondsRealtime(0.4f);
+        SFXManager.Instance.PlaySFX("explosion");
         statHeaderText.text += "Most Umbrellas Stacked:\n";
         statResultText.text += $"{Umbrella.mostActiveUmbrellasEver}\n";
 
         //Replay Button
         yield return new WaitForSecondsRealtime(0.4f);
+        SFXManager.Instance.PlaySFX("explosion");
         replayButton.SetActive(true);
 
     }

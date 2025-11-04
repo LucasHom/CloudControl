@@ -87,17 +87,20 @@ public class CloudBoss : MonoBehaviour
 
         //Title shot
         yield return new WaitForSeconds(0.7f);
+        SFXManager.Instance.PlaySFX("explosion");
         transform.position = new Vector3(transform.position.x, 16f, transform.position.z);
         yield return new WaitForSeconds(0.7f);
+        SFXManager.Instance.PlaySFX("explosion");
         transform.position = new Vector3(transform.position.x, 25f, transform.position.z);
         yield return new WaitForSeconds(0.7f);
+        SFXManager.Instance.PlaySFX("explosion");
         transform.position = new Vector3(transform.position.x, 35f, transform.position.z);
 
         //Show title
         yield return new WaitForSeconds(1f);
         SFXManager.Instance.PlaySFX("titleCard");
         titleCard.SetActive(true);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.5f);
         titleCard.SetActive(false);
 
         cameraManager.SwitchToGameView();

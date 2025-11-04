@@ -382,7 +382,6 @@ public class CitizenManager : MonoBehaviour
 
     public void EndGame()
     {
-        SFXManager.Instance.PlaySFX("gameOver");
         timesMidgeHit++;
         endScreen.GetComponent<EndScreen>().didWin = false;
         animator.enabled = false;

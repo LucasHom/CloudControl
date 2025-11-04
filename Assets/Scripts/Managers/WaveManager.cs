@@ -113,7 +113,7 @@ public class WaveManager : MonoBehaviour
         });
         unlockQueue.Enqueue(() =>
         {
-            createPopup("Item", "Shields citizen from incoming sludge", "Umbrella", umbrellaImage, 3f);
+            createPopup("Item", "Shields Midge from incoming sludge", "Umbrella", umbrellaImage, 3f);
             ButtonSecurityManager.Unlock("UmbrellaButton");
         });
         unlockQueue.Enqueue(() =>
@@ -123,12 +123,12 @@ public class WaveManager : MonoBehaviour
         });
         unlockQueue.Enqueue(() =>
         {
-            createPopup("Upgrade", "Increase player speed", "Swift shoe", swiftShoeImage, 4f);
+            createPopup("Upgrade", "Increase your speed", "Swift shoe", swiftShoeImage, 4f);
             ButtonSecurityManager.Unlock("PlayerSpeedButton");
         });
         unlockQueue.Enqueue(() =>
         {
-            createPopup("Item", "Crack open to heal citizen", "Medpack", medpackImage, 2.5f);
+            createPopup("Item", "Crack open to heal Midge", "Medpack", medpackImage, 2.5f);
             ButtonSecurityManager.Unlock("MedpackButton");
         });
         unlockQueue.Enqueue(() =>
@@ -400,6 +400,8 @@ public class WaveManager : MonoBehaviour
     {
         StartCoroutine(cloudMovement.ChangeCloudHeight(cloudHeightChange));
 
+        SFXManager.Instance.PlayLoopingMusic("bossentrance");
+        //this routine takes 7s
         yield return new WaitForSeconds(2f);
         cameraManager.SwitchToWaveView();
         yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
@@ -410,6 +412,7 @@ public class WaveManager : MonoBehaviour
 
         SFXManager.Instance.PlaySFX("mad");
         yield return new WaitForSeconds(timeBetweenWave);
+        //end of routine
 
         cameraManager.SwitchToGameView();
         StartCoroutine(cloudBoss.DeathByGlamour()); //Start bossfight

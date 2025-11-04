@@ -14576,7 +14576,7 @@ MonoBehaviour:
   shieldBubbleImage: {fileID: 21300000, guid: ace317b06a71450498edca5b02800026, type: 3}
   tutorialPrefab: {fileID: 6555684292002418141, guid: 938ce1effc26f2048aca72393edbee27, type: 3}
   CCPVan: {fileID: 987799688}
-  testBossWave: 0
+  testBossWave: 1
 --- !u!114 &839196640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14669,7 +14669,7 @@ MonoBehaviour:
   supportBallPrefab: {fileID: 6299765533239844623, guid: 051744ab5c274b049a95217847608fd8, type: 3}
   timeBetweenSpawn: 0.5
   allWaves: []
-  testingMode: 0
+  testingMode: 1
 --- !u!114 &839196645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14714,7 +14714,7 @@ MonoBehaviour:
   - name: close
     clip: {fileID: 8300000, guid: 39771c0e658e1db47ac224f76fbb52cb, type: 3}
   - name: titleCard
-    clip: {fileID: 8300000, guid: 81d0ecaa43c38c24e99d0a5f6fc87eb4, type: 3}
+    clip: {fileID: 8300000, guid: 80d580e126e32ed4684c407d9c15bd37, type: 3}
   - name: splat
     clip: {fileID: 8300000, guid: 437ef2497f10fd34f989cd45b41e3f63, type: 3}
   - name: defend
@@ -14729,7 +14729,15 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 19ba52f7bc16c9f4c8bf63e8640ffad6, type: 3}
   - name: gust
     clip: {fileID: 8300000, guid: b35d9703aeed8c4429c8a6c82fd4c110, type: 3}
+  - name: chill
+    clip: {fileID: 8300000, guid: abf20f4d4810f92469b7b4e2cf1b3be5, type: 3}
+  - name: shine
+    clip: {fileID: 8300000, guid: 51cd1b761d2231740860fd02b7a7205e, type: 3}
   - name: casualSong
+    clip: {fileID: 0}
+  - name: bossentrance
+    clip: {fileID: 8300000, guid: ccc53a2e3fd403247ba6a266ee80d537, type: 3}
+  - name: boss
     clip: {fileID: 0}
 --- !u!1 &851909405
 GameObject:
