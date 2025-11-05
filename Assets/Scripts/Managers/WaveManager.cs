@@ -222,6 +222,11 @@ public class WaveManager : MonoBehaviour
         {
             updateWaveIsOver();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Screen.fullScreen)
+                Screen.fullScreen = false;
+        }
     }
 
     private void updateWaveIsOver()
@@ -327,6 +332,10 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        Debug.Log("start");
+        SFXManager.Instance.StopLoopingMusic();
+        yield return new WaitForSeconds(2f);
+        Debug.Log("continue");
         //Wave 11: Bossfight
         StartCoroutine(FlashFlood());
     }
@@ -398,6 +407,7 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator FlashFlood()
     {
+        
         StartCoroutine(cloudMovement.ChangeCloudHeight(cloudHeightChange));
 
         SFXManager.Instance.PlayLoopingMusic("bossentrance");

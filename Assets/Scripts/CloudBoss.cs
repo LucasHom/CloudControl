@@ -79,6 +79,7 @@ public class CloudBoss : MonoBehaviour
         yield return StartCoroutine(PhaseThree());
 
         //turn off shop toggle
+        SFXManager.Instance.StopLoopingMusic();
         waveManager.ToggleCitizenHealth();
         shopManager.ToggleCurrency();
         shopManager.isShopToggleReady = false;
