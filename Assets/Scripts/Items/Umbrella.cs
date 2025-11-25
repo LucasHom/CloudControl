@@ -21,7 +21,7 @@ public class Umbrella : MonoBehaviour
 
     //Health
     private int health = default;
-    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int maxHealth = 10;
 
     //Flash
     [SerializeField] private float flashDuration = 0.15f;
@@ -35,7 +35,7 @@ public class Umbrella : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        health = 1;
         citizen = FindObjectOfType<CitizenManager>();
         purchaseUmbrella = FindObjectOfType<PurchaseUmbrella>();
 
@@ -50,7 +50,10 @@ public class Umbrella : MonoBehaviour
             //Increase health of lower umbrellas
             foreach (Umbrella umbrella in activeUmbrellas)
             {
-                umbrella.health += 1;
+                if (umbrella.health < maxHealth)
+                {
+                    umbrella.health += 1;
+                }
             }
 
             transform.position = activeUmbrellas.Peek().transform.position + new Vector3(0, 0.95f);

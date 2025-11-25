@@ -273,6 +273,7 @@ public class CitizenManager : MonoBehaviour
         
         thanksEarned.gameObject.SetActive(false);
 
+        SFXManager.Instance.PlaySFX("buy");
         thanksReaction.SetActive(true);
         Vector3 startPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY, 0f);
         Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y + reactionOffsetY + 0.6f, 0f);

@@ -50,10 +50,10 @@ public class CloudBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            StartCoroutine(Rain());
-        }
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    StartCoroutine(Rain());
+        //}
     }
 
     public IEnumerator DeathByGlamour()
