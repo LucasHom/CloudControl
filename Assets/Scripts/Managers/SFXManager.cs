@@ -70,6 +70,20 @@ public class SFXManager : MonoBehaviour
         }
     }
 
+    public void PlaySFX(string name, float volumeScale)
+    {
+        if (sfxDictionary.TryGetValue(name, out AudioClip clip))
+        {
+            // volumeScale multiplies your global sfxVolume
+            audioSource.PlayOneShot(clip, sfxVolume * Mathf.Clamp01(volumeScale));
+        }
+        else
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+        }
+    }
+
+
     public void PlayLoopingMusic(string name, float startTime = 0f, bool fadeIn = true)
     {
         if (sfxDictionary.TryGetValue(name, out AudioClip clip))

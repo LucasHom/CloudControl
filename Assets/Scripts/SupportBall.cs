@@ -79,8 +79,12 @@ public class SupportBall : MonoBehaviour
             Destroy(fixedJoint);
             rb2d.gravityScale = 1f;
             rb2d.AddForce(new Vector2(Random.Range(-0.4f, 0.4f), 0f), ForceMode2D.Impulse);
+
+            gameObject.layer = LayerMask.NameToLayer("BigSB");
         }
         rb2d.AddForce(growForce, ForceMode2D.Impulse);
+
+
     }
 
     public void Bounce()

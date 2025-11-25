@@ -50,7 +50,10 @@ public class CloudBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StartCoroutine(Rain());
+        }
     }
 
     public IEnumerator DeathByGlamour()
@@ -127,6 +130,7 @@ public class CloudBoss : MonoBehaviour
 
     private IEnumerator PhaseOne()
     {
+
         yield return StartCoroutine(SpawnWeakSpots(5));
         yield return new WaitForSeconds(10f);
 
@@ -137,8 +141,6 @@ public class CloudBoss : MonoBehaviour
             SpawnSludge("normal", 5f, randomPosition);
             yield return new WaitForSeconds(3f);
         }
-
-        Debug.Log("Phase1 over!");
     }
 
     private IEnumerator PhaseTwo()
@@ -282,22 +284,52 @@ public class CloudBoss : MonoBehaviour
 
     private IEnumerator CloudDie()
     {
-        StartCoroutine(FadeOut(GetComponent<SpriteRenderer>(), 5f)); // fade now lasts 8 seconds
+        StartCoroutine(FadeOut(GetComponent<SpriteRenderer>(), 5f));
         StartCoroutine(Rain());
 
-        for (int i = 0; i < 140; i++)
+        float startVol = 1f;
+        float endVol = 0.1f;
+        int total = 100;
+
+        // Optimization: reuse this
+        WaitForSeconds delay = new WaitForSeconds(0.06f);
+
+        // Cache transform
+        Transform tf = transform;
+        Vector3 basePos = tf.position;
+
+        for (int i = 0; i < total; i++)
         {
-            Vector3 randomPosition = new Vector3(transform.position.x + Random.Range(-6.5f, 6.5f), transform.position.y + Random.Range(-1.5f, 1), transform.position.z);
-            Instantiate(sewageExplosion, randomPosition, Quaternion.identity);
-            yield return new WaitForSeconds(0.04f);
+            float t = (float)i / (total - 1);
+
+            // Exponential drop near the END
+            float curve = 1f - Mathf.Pow(1f - t, 3);
+            float currentVol = Mathf.Lerp(startVol, endVol, curve);
+
+            // Play sound
+            SFXManager.Instance.PlaySFX("explosion", currentVol);
+
+            // Compute random pos efficiently
+            Vector3 pos = basePos;
+            pos.x += Random.Range(-6.5f, 6.5f);
+            pos.y += Random.Range(-1.5f, 1f);
+
+            // Instantiate optimized
+            var explosion = Instantiate(sewageExplosion, pos, Quaternion.identity);
+            explosion.GetComponent<SewageExplosion>().isVolumeControlled = true;
+
+            yield return delay;
         }
-        transform.position = new Vector3(transform.position.x, 10f, transform.position.z);
+
+        tf.position = new Vector3(tf.position.x, 10f, tf.position.z);
         cameraManager.SwitchToWaveView();
 
         yield return new WaitForSeconds(3.5f);
+        citizenManager.citizenHealth = citizenManager.maxCitizenHealth;
         yield return StartCoroutine(citizenManager.ShowEcstatic());
-
     }
+
+
 
     // Testing some new butt
     /// <summary>
@@ -321,10 +353,6 @@ public class CloudBoss : MonoBehaviour
         else if (type == "all")
         {
             sludge = Instantiate(allSludge[Random.Range(0, allSludge.Length)], spawnPosition, Quaternion.identity);
-        }
-        else
-        {
-            Debug.LogError("Invalid sludge type specified for SpawnSludge method.");
         }
 
         if (sludge != null)
@@ -351,7 +379,8 @@ public class CloudBoss : MonoBehaviour
         for (int i = 0; i < 300; i++)
         {
             Vector3 randomPosition = new Vector3(Random.Range(-7.5f, 7.5f), 6f, transform.position.z);
-            Instantiate(waterPellet, randomPosition, Quaternion.identity);
+            var water = Instantiate(waterPellet, randomPosition, Quaternion.identity);
+            water.GetComponentInChildren<WaterCollision>().isVolumeControlled = true;
             yield return new WaitForSeconds(0.015f);
         }
     }

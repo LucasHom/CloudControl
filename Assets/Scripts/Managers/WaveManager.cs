@@ -226,6 +226,10 @@ public class WaveManager : MonoBehaviour
         {
             if (Screen.fullScreen)
                 Screen.fullScreen = false;
+            else
+            {
+                Screen.fullScreen = true;
+            }
         }
     }
 
@@ -332,10 +336,8 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        Debug.Log("start");
         SFXManager.Instance.StopLoopingMusic();
         yield return new WaitForSeconds(2f);
-        Debug.Log("continue");
         //Wave 11: Bossfight
         StartCoroutine(FlashFlood());
     }

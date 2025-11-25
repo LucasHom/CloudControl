@@ -5,10 +5,20 @@ using UnityEngine;
 public class SewageExplosion : MonoBehaviour
 {
     private Animator animator;
+    public bool isVolumeControlled;
+
+    private void Awake()
+    {
+        isVolumeControlled = false;
+    }
 
     void Start()
     {
-        SFXManager.Instance.PlaySFX("explosion");
+        if (!isVolumeControlled)
+        {
+            SFXManager.Instance.PlaySFX("explosion");
+        }
+
         animator = GetComponent<Animator>();
 
         float animLength = animator.GetCurrentAnimatorStateInfo(0).length;
