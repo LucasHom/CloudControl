@@ -381,7 +381,7 @@ MonoBehaviour:
   citizen: {fileID: 0}
   rb2d: {fileID: 5037389089182390237}
   healthIndicator: {fileID: 6262271263956626302}
-  maxHealth: 1
+  maxHealth: 10
   flashDuration: 0.15
   bounceForceX: 3
   bounceForceY: 2
